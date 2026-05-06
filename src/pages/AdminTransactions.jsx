@@ -244,7 +244,7 @@
 // export default AdminTransactions;
 
 import React, { useState, useMemo, useEffect } from "react";
-import api from "../api/api";
+import axios from "axios";
 import "../styles/transactions.css";
 
 const AdminTransactions = () => {
@@ -256,12 +256,27 @@ const AdminTransactions = () => {
   const rowsPerPage = 5;
 
   // =========================
+  // BASE URL (ENV SAFE)
+  // =========================
+  const API = process.env.REACT_APP_API_URL;
+
+  const token = localStorage.getItem("token");
+
+  // =========================
   // FETCH TRANSACTIONS
   // =========================
   useEffect(() => {
     const fetchTx = async () => {
       try {
-        const res = await api.get("/api/admin/transactions");
+        const res = await axios.get(
+          `${API}/api/admin/transactions`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
         setTxs(res.data);
       } catch (err) {
         console.error("Failed to load transactions:", err);
@@ -271,7 +286,7 @@ const AdminTransactions = () => {
     };
 
     fetchTx();
-  }, []);
+  }, [API, token]);
 
   // =========================
   // UPDATE STATUS
@@ -279,11 +294,18 @@ const AdminTransactions = () => {
   const updateStatus = async (tx, status) => {
     try {
       const endpoint =
-        tx.type === "deposit" ? "deposit" : "withdrawal";
+        tx.type === "deposit"
+          ? "deposit"
+          : "withdrawal";
 
-      await api.patch(
-        `/api/admin/transactions/${endpoint}/${tx._id}`,
-        { status }
+      await axios.patch(
+        `${API}/api/admin/transactions/${endpoint}/${tx._id}`,
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       // update UI instantly
@@ -357,14 +379,7 @@ const AdminTransactions = () => {
   // =========================
   const handleExport = () => {
     const csv = [
-      [
-        "Reference",
-        "User",
-        "Amount",
-        "Type",
-        "Status",
-        "Date",
-      ],
+      ["Reference", "User", "Amount", "Type", "Status", "Date"],
       ...filteredData.map((t) => [
         t.reference,
         t.userEmail,
