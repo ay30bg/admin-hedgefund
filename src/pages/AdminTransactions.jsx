@@ -1,45 +1,354 @@
-// import React, { useState, useMemo } from "react";
+// // import React, { useState, useMemo } from "react";
+// // import "../styles/transactions.css";
+
+// // const AdminTransactions = () => {
+// //   const [txs, setTxs] = useState([
+// //     {
+// //       _id: "1",
+// //       reference: "TXN-1001",
+// //       userEmail: "user1@mail.com",
+// //       amount: 200,
+// //       type: "deposit",
+// //       status: "pending",
+// //       date: "2026-05-01",
+// //     },
+// //     {
+// //       _id: "2",
+// //       reference: "TXN-1002",
+// //       userEmail: "user2@mail.com",
+// //       amount: 500,
+// //       type: "withdrawal",
+// //       status: "approved",
+// //       date: "2026-05-03",
+// //     },
+// //   ]);
+
+// //   const [search, setSearch] = useState("");
+// //   const [currentPage, setCurrentPage] = useState(1);
+// //   const rowsPerPage = 5;
+
+// //   const updateStatus = (id, status) => {
+// //     setTxs((prev) =>
+// //       prev.map((tx) =>
+// //         tx._id === id ? { ...tx, status } : tx
+// //       )
+// //     );
+// //   };
+
+// //   const getStatusClass = (status) => {
+// //     switch (status) {
+// //       case "approved":
+// //         return "status approved";
+// //       case "rejected":
+// //         return "status rejected";
+// //       default:
+// //         return "status pending";
+// //     }
+// //   };
+
+// //   const formatType = (type) =>
+// //     type.charAt(0).toUpperCase() + type.slice(1);
+
+// //   const formatDate = (date) =>
+// //     new Date(date).toLocaleDateString("en-NG", {
+// //       day: "numeric",
+// //       month: "short",
+// //       year: "numeric",
+// //     });
+
+// //   /* =========================
+// //      SEARCH FILTER
+// //   ========================= */
+// //   const filteredData = useMemo(() => {
+// //     return txs.filter(
+// //       (t) =>
+// //         t.userEmail.toLowerCase().includes(search.toLowerCase()) ||
+// //         t.reference.toLowerCase().includes(search.toLowerCase())
+// //     );
+// //   }, [txs, search]);
+
+// //   /* =========================
+// //      PAGINATION
+// //   ========================= */
+// //   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
+// //   const paginatedData = filteredData.slice(
+// //     (currentPage - 1) * rowsPerPage,
+// //     currentPage * rowsPerPage
+// //   );
+
+// //   /* =========================
+// //      EXPORT CSV
+// //   ========================= */
+// //   const handleExport = () => {
+// //     const csv = [
+// //       [
+// //         "Reference",
+// //         "User",
+// //         "Amount",
+// //         "Type",
+// //         "Status",
+// //         "Date",
+// //       ],
+// //       ...filteredData.map((t) => [
+// //         t.reference,
+// //         t.userEmail,
+// //         `₦${t.amount}`,
+// //         t.type,
+// //         t.status,
+// //         t.date,
+// //       ]),
+// //     ]
+// //       .map((row) => row.join(","))
+// //       .join("\n");
+
+// //     const blob = new Blob([csv], {
+// //       type: "text/csv;charset=utf-8;",
+// //     });
+
+// //     const link = document.createElement("a");
+// //     link.href = URL.createObjectURL(blob);
+// //     link.download = "transactions.csv";
+// //     link.click();
+// //   };
+
+// //   return (
+// //     <div className="tx-page">
+// //       <div className="tx-header">
+// //         <h2>Transactions</h2>
+// //       </div>
+
+// //       {/* =========================
+// //           TABLE CONTROLS
+// //       ========================= */}
+// //       <div className="table-controls">
+// //         <input
+// //           type="text"
+// //           className="search-input"
+// //           placeholder="Search by user or reference..."
+// //           value={search}
+// //           onChange={(e) => {
+// //             setSearch(e.target.value);
+// //             setCurrentPage(1);
+// //           }}
+// //         />
+
+// //         <div className="buttons-right">
+// //           <button className="btn btn-export" onClick={handleExport}>
+// //             Export CSV
+// //           </button>
+// //         </div>
+// //       </div>
+
+// //       {/* =========================
+// //           TABLE
+// //       ========================= */}
+// //       <div className="table-wrapper">
+// //         <table className="tx-table">
+// //           <thead>
+// //             <tr>
+// //               <th>Reference</th>
+// //               <th>User</th>
+// //               <th>Amount</th>
+// //               <th>Type</th>
+// //               <th>Status</th>
+// //               <th>Date</th>
+// //               <th>Action</th>
+// //             </tr>
+// //           </thead>
+
+// //           <tbody>
+// //             {paginatedData.map((tx) => (
+// //               <tr key={tx._id}>
+// //                 <td data-label="Reference">{tx.reference}</td>
+
+// //                 <td data-label="User">{tx.userEmail}</td>
+
+// //                 <td data-label="Amount" className="amount">
+// //                   ${tx.amount.toLocaleString()}
+// //                 </td>
+
+// //                 <td data-label="Type" className="type">
+// //                   {formatType(tx.type)}
+// //                 </td>
+
+// //                 <td data-label="Status">
+// //                   <span className={getStatusClass(tx.status)}>
+// //                     {formatType(tx.status)}
+// //                   </span>
+// //                 </td>
+
+// //                 <td data-label="Date">{formatDate(tx.date)}</td>
+
+// //                 <td data-label="Action">
+// //                   {tx.status === "pending" ? (
+// //                     <div className="actions">
+// //                       <button
+// //                         className="btn approve"
+// //                         onClick={() =>
+// //                           updateStatus(tx._id, "approved")
+// //                         }
+// //                       >
+// //                         Approve
+// //                       </button>
+
+// //                       <button
+// //                         className="btn reject"
+// //                         onClick={() =>
+// //                           updateStatus(tx._id, "rejected")
+// //                         }
+// //                       >
+// //                         Reject
+// //                       </button>
+// //                     </div>
+// //                   ) : (
+// //                     <span className="done">—</span>
+// //                   )}
+// //                 </td>
+// //               </tr>
+// //             ))}
+// //           </tbody>
+// //         </table>
+// //       </div>
+
+// //       {/* =========================
+// //           PAGINATION
+// //       ========================= */}
+// //       <div className="pagination">
+// //         <button
+// //           onClick={() =>
+// //             setCurrentPage((p) => Math.max(1, p - 1))
+// //           }
+// //           disabled={currentPage === 1}
+// //         >
+// //           Prev
+// //         </button>
+
+// //         <span className="current-page">{currentPage}</span>
+
+// //         <button
+// //           onClick={() =>
+// //             setCurrentPage((p) =>
+// //               Math.min(totalPages, p + 1)
+// //             )
+// //           }
+// //           disabled={currentPage === totalPages || totalPages === 0}
+// //         >
+// //           Next
+// //         </button>
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
+// // export default AdminTransactions;
+
+// import React, { useState, useMemo, useEffect } from "react";
+// import axios from "axios";
 // import "../styles/transactions.css";
 
 // const AdminTransactions = () => {
-//   const [txs, setTxs] = useState([
-//     {
-//       _id: "1",
-//       reference: "TXN-1001",
-//       userEmail: "user1@mail.com",
-//       amount: 200,
-//       type: "deposit",
-//       status: "pending",
-//       date: "2026-05-01",
-//     },
-//     {
-//       _id: "2",
-//       reference: "TXN-1002",
-//       userEmail: "user2@mail.com",
-//       amount: 500,
-//       type: "withdrawal",
-//       status: "approved",
-//       date: "2026-05-03",
-//     },
-//   ]);
-
+//   const [txs, setTxs] = useState([]);
 //   const [search, setSearch] = useState("");
 //   const [currentPage, setCurrentPage] = useState(1);
+//   const [loading, setLoading] = useState(true);
+
 //   const rowsPerPage = 5;
 
-//   const updateStatus = (id, status) => {
-//     setTxs((prev) =>
-//       prev.map((tx) =>
-//         tx._id === id ? { ...tx, status } : tx
-//       )
-//     );
+//   const API = process.env.REACT_APP_API_URL;
+
+//   // =========================
+//   // SAFE TOKEN HANDLING
+//   // =========================
+//   const getToken = () => {
+//     return localStorage.getItem("token");
 //   };
 
+//   // =========================
+//   // FETCH TRANSACTIONS
+//   // =========================
+//   useEffect(() => {
+//     const fetchTx = async () => {
+//       try {
+//         const token = getToken();
+
+//         if (!token) {
+//           console.warn("No token found in localStorage");
+//           setLoading(false);
+//           return;
+//         }
+
+//         const res = await axios.get(
+//           `${API}/api/admin/transactions`,
+//           {
+//             headers: {
+//               Authorization: `Bearer ${token}`,
+//             },
+//           }
+//         );
+
+//         setTxs(res.data);
+//       } catch (err) {
+//         console.error(
+//           "Failed to load transactions:",
+//           err?.response?.data || err.message
+//         );
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchTx();
+//   }, [API]);
+
+//   // =========================
+//   // UPDATE STATUS
+//   // =========================
+//   const updateStatus = async (tx, status) => {
+//     try {
+//       const token = getToken();
+
+//       if (!token) {
+//         alert("Session expired. Please login again.");
+//         return;
+//       }
+
+//       const endpoint =
+//         tx.type === "deposit" ? "deposit" : "withdrawal";
+
+//       await axios.patch(
+//         `${API}/api/admin/transactions/${endpoint}/${tx._id}`,
+//         { status },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+
+//       setTxs((prev) =>
+//         prev.map((item) =>
+//           item._id === tx._id ? { ...item, status } : item
+//         )
+//       );
+//     } catch (err) {
+//       console.error(
+//         "Status update failed:",
+//         err?.response?.data || err.message
+//       );
+//     }
+//   };
+
+//   // =========================
+//   // HELPERS
+//   // =========================
 //   const getStatusClass = (status) => {
-//     switch (status) {
+//     switch (status?.toLowerCase()) {
 //       case "approved":
+//       case "confirmed":
 //         return "status approved";
 //       case "rejected":
+//       case "failed":
 //         return "status rejected";
 //       default:
 //         return "status pending";
@@ -56,20 +365,24 @@
 //       year: "numeric",
 //     });
 
-//   /* =========================
-//      SEARCH FILTER
-//   ========================= */
+//   // =========================
+//   // FILTER
+//   // =========================
 //   const filteredData = useMemo(() => {
 //     return txs.filter(
 //       (t) =>
-//         t.userEmail.toLowerCase().includes(search.toLowerCase()) ||
-//         t.reference.toLowerCase().includes(search.toLowerCase())
+//         t.userEmail
+//           .toLowerCase()
+//           .includes(search.toLowerCase()) ||
+//         t.reference
+//           .toLowerCase()
+//           .includes(search.toLowerCase())
 //     );
 //   }, [txs, search]);
 
-//   /* =========================
-//      PAGINATION
-//   ========================= */
+//   // =========================
+//   // PAGINATION
+//   // =========================
 //   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
 //   const paginatedData = filteredData.slice(
@@ -77,40 +390,12 @@
 //     currentPage * rowsPerPage
 //   );
 
-//   /* =========================
-//      EXPORT CSV
-//   ========================= */
-//   const handleExport = () => {
-//     const csv = [
-//       [
-//         "Reference",
-//         "User",
-//         "Amount",
-//         "Type",
-//         "Status",
-//         "Date",
-//       ],
-//       ...filteredData.map((t) => [
-//         t.reference,
-//         t.userEmail,
-//         `₦${t.amount}`,
-//         t.type,
-//         t.status,
-//         t.date,
-//       ]),
-//     ]
-//       .map((row) => row.join(","))
-//       .join("\n");
-
-//     const blob = new Blob([csv], {
-//       type: "text/csv;charset=utf-8;",
-//     });
-
-//     const link = document.createElement("a");
-//     link.href = URL.createObjectURL(blob);
-//     link.download = "transactions.csv";
-//     link.click();
-//   };
+//   // =========================
+//   // LOADING STATE
+//   // =========================
+//   if (loading) {
+//     return <div className="tx-page">Loading transactions...</div>;
+//   }
 
 //   return (
 //     <div className="tx-page">
@@ -118,31 +403,21 @@
 //         <h2>Transactions</h2>
 //       </div>
 
-//       {/* =========================
-//           TABLE CONTROLS
-//       ========================= */}
+//       {/* SEARCH */}
 //       <div className="table-controls">
 //         <input
 //           type="text"
 //           className="search-input"
-//           placeholder="Search by user or reference..."
+//           placeholder="Search..."
 //           value={search}
 //           onChange={(e) => {
 //             setSearch(e.target.value);
 //             setCurrentPage(1);
 //           }}
 //         />
-
-//         <div className="buttons-right">
-//           <button className="btn btn-export" onClick={handleExport}>
-//             Export CSV
-//           </button>
-//         </div>
 //       </div>
 
-//       {/* =========================
-//           TABLE
-//       ========================= */}
+//       {/* TABLE */}
 //       <div className="table-wrapper">
 //         <table className="tx-table">
 //           <thead>
@@ -160,33 +435,27 @@
 //           <tbody>
 //             {paginatedData.map((tx) => (
 //               <tr key={tx._id}>
-//                 <td data-label="Reference">{tx.reference}</td>
+//                 <td>{tx.reference}</td>
+//                 <td>{tx.userEmail}</td>
+//                 <td>${tx.amount.toLocaleString()}</td>
+//                 <td>{formatType(tx.type)}</td>
 
-//                 <td data-label="User">{tx.userEmail}</td>
-
-//                 <td data-label="Amount" className="amount">
-//                   ${tx.amount.toLocaleString()}
-//                 </td>
-
-//                 <td data-label="Type" className="type">
-//                   {formatType(tx.type)}
-//                 </td>
-
-//                 <td data-label="Status">
+//                 <td>
 //                   <span className={getStatusClass(tx.status)}>
 //                     {formatType(tx.status)}
 //                   </span>
 //                 </td>
 
-//                 <td data-label="Date">{formatDate(tx.date)}</td>
+//                 <td>{formatDate(tx.date)}</td>
 
-//                 <td data-label="Action">
-//                   {tx.status === "pending" ? (
+//                 <td>
+//                   {tx.status === "pending" ||
+//                   tx.status === "waiting" ? (
 //                     <div className="actions">
 //                       <button
 //                         className="btn approve"
 //                         onClick={() =>
-//                           updateStatus(tx._id, "approved")
+//                           updateStatus(tx, "approved")
 //                         }
 //                       >
 //                         Approve
@@ -195,14 +464,14 @@
 //                       <button
 //                         className="btn reject"
 //                         onClick={() =>
-//                           updateStatus(tx._id, "rejected")
+//                           updateStatus(tx, "rejected")
 //                         }
 //                       >
 //                         Reject
 //                       </button>
 //                     </div>
 //                   ) : (
-//                     <span className="done">—</span>
+//                     <span>—</span>
 //                   )}
 //                 </td>
 //               </tr>
@@ -211,9 +480,7 @@
 //         </table>
 //       </div>
 
-//       {/* =========================
-//           PAGINATION
-//       ========================= */}
+//       {/* PAGINATION */}
 //       <div className="pagination">
 //         <button
 //           onClick={() =>
@@ -224,7 +491,7 @@
 //           Prev
 //         </button>
 
-//         <span className="current-page">{currentPage}</span>
+//         <span>{currentPage}</span>
 
 //         <button
 //           onClick={() =>
@@ -232,7 +499,7 @@
 //               Math.min(totalPages, p + 1)
 //             )
 //           }
-//           disabled={currentPage === totalPages || totalPages === 0}
+//           disabled={currentPage === totalPages}
 //         >
 //           Next
 //         </button>
@@ -242,6 +509,7 @@
 // };
 
 // export default AdminTransactions;
+
 
 import React, { useState, useMemo, useEffect } from "react";
 import axios from "axios";
@@ -254,15 +522,12 @@ const AdminTransactions = () => {
   const [loading, setLoading] = useState(true);
 
   const rowsPerPage = 5;
-
   const API = process.env.REACT_APP_API_URL;
 
   // =========================
-  // SAFE TOKEN HANDLING
+  // TOKEN
   // =========================
-  const getToken = () => {
-    return localStorage.getItem("token");
-  };
+  const getToken = () => localStorage.getItem("token");
 
   // =========================
   // FETCH TRANSACTIONS
@@ -273,7 +538,6 @@ const AdminTransactions = () => {
         const token = getToken();
 
         if (!token) {
-          console.warn("No token found in localStorage");
           setLoading(false);
           return;
         }
@@ -289,10 +553,7 @@ const AdminTransactions = () => {
 
         setTxs(res.data);
       } catch (err) {
-        console.error(
-          "Failed to load transactions:",
-          err?.response?.data || err.message
-        );
+        console.error(err?.response?.data || err.message);
       } finally {
         setLoading(false);
       }
@@ -307,11 +568,6 @@ const AdminTransactions = () => {
   const updateStatus = async (tx, status) => {
     try {
       const token = getToken();
-
-      if (!token) {
-        alert("Session expired. Please login again.");
-        return;
-      }
 
       const endpoint =
         tx.type === "deposit" ? "deposit" : "withdrawal";
@@ -332,16 +588,23 @@ const AdminTransactions = () => {
         )
       );
     } catch (err) {
-      console.error(
-        "Status update failed:",
-        err?.response?.data || err.message
-      );
+      console.error(err?.response?.data || err.message);
     }
   };
 
   // =========================
   // HELPERS
   // =========================
+  const formatType = (type) =>
+    type.charAt(0).toUpperCase() + type.slice(1);
+
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-NG", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+
   const getStatusClass = (status) => {
     switch (status?.toLowerCase()) {
       case "approved":
@@ -354,16 +617,6 @@ const AdminTransactions = () => {
         return "status pending";
     }
   };
-
-  const formatType = (type) =>
-    type.charAt(0).toUpperCase() + type.slice(1);
-
-  const formatDate = (date) =>
-    new Date(date).toLocaleDateString("en-NG", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
 
   // =========================
   // FILTER
@@ -391,8 +644,33 @@ const AdminTransactions = () => {
   );
 
   // =========================
-  // LOADING STATE
+  // EXPORT CSV (RESTORED)
   // =========================
+  const handleExport = () => {
+    const csv = [
+      ["Reference", "User", "Amount", "Type", "Status", "Date"],
+      ...filteredData.map((t) => [
+        t.reference,
+        t.userEmail,
+        t.amount,
+        t.type,
+        t.status,
+        t.date,
+      ]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], {
+      type: "text/csv;charset=utf-8;",
+    });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "transactions.csv";
+    link.click();
+  };
+
   if (loading) {
     return <div className="tx-page">Loading transactions...</div>;
   }
@@ -403,18 +681,24 @@ const AdminTransactions = () => {
         <h2>Transactions</h2>
       </div>
 
-      {/* SEARCH */}
+      {/* CONTROLS */}
       <div className="table-controls">
         <input
           type="text"
           className="search-input"
-          placeholder="Search..."
+          placeholder="Search by user or reference..."
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
             setCurrentPage(1);
           }}
         />
+
+        <div className="buttons-right">
+          <button className="btn btn-export" onClick={handleExport}>
+            Export CSV
+          </button>
+        </div>
       </div>
 
       {/* TABLE */}
@@ -435,37 +719,38 @@ const AdminTransactions = () => {
           <tbody>
             {paginatedData.map((tx) => (
               <tr key={tx._id}>
-                <td>{tx.reference}</td>
-                <td>{tx.userEmail}</td>
-                <td>${tx.amount.toLocaleString()}</td>
-                <td>{formatType(tx.type)}</td>
+                <td data-label="Reference">{tx.reference}</td>
 
-                <td>
+                <td data-label="User">{tx.userEmail}</td>
+
+                <td data-label="Amount">
+                  ${tx.amount.toLocaleString()}
+                </td>
+
+                <td data-label="Type">{formatType(tx.type)}</td>
+
+                <td data-label="Status">
                   <span className={getStatusClass(tx.status)}>
                     {formatType(tx.status)}
                   </span>
                 </td>
 
-                <td>{formatDate(tx.date)}</td>
+                <td data-label="Date">{formatDate(tx.date)}</td>
 
-                <td>
+                <td data-label="Action">
                   {tx.status === "pending" ||
                   tx.status === "waiting" ? (
                     <div className="actions">
                       <button
                         className="btn approve"
-                        onClick={() =>
-                          updateStatus(tx, "approved")
-                        }
+                        onClick={() => updateStatus(tx, "approved")}
                       >
                         Approve
                       </button>
 
                       <button
                         className="btn reject"
-                        onClick={() =>
-                          updateStatus(tx, "rejected")
-                        }
+                        onClick={() => updateStatus(tx, "rejected")}
                       >
                         Reject
                       </button>
@@ -483,9 +768,7 @@ const AdminTransactions = () => {
       {/* PAGINATION */}
       <div className="pagination">
         <button
-          onClick={() =>
-            setCurrentPage((p) => Math.max(1, p - 1))
-          }
+          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
           disabled={currentPage === 1}
         >
           Prev
@@ -495,9 +778,7 @@ const AdminTransactions = () => {
 
         <button
           onClick={() =>
-            setCurrentPage((p) =>
-              Math.min(totalPages, p + 1)
-            )
+            setCurrentPage((p) => Math.min(totalPages, p + 1))
           }
           disabled={currentPage === totalPages}
         >
