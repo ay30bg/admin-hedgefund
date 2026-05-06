@@ -4,15 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { AdminAuthProvider } from './context/AdminAuthContext';
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <AdminAuthProvider>
       <App />
-    </AdminAuthProvider>
   </React.StrictMode>
 );
 
