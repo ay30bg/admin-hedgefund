@@ -1,10 +1,13 @@
 import { Navigate } from "react-router-dom";
-import { useAdminAuth } from "../context/AdminAuthContext";
 
-const AdminRoute = ({ children }) => {
-  const { isAuthenticated } = useAdminAuth();
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("adminToken");
 
-  return isAuthenticated ? children : <Navigate to="/admin/login" />;
+  if (!token) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  return children;
 };
 
-export default AdminRoute;
+export default ProtectedRoute;
