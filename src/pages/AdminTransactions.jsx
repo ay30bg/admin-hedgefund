@@ -255,12 +255,14 @@ const AdminTransactions = () => {
 
   const rowsPerPage = 5;
 
-  // =========================
-  // BASE URL (ENV SAFE)
-  // =========================
   const API = process.env.REACT_APP_API_URL;
 
-  const token = localStorage.getItem("token");
+  // =========================
+  // SAFE TOKEN HANDLING
+  // =========================
+  const getToken = () => {
+    return localStorage.getItem("token");
+  };
 
   // =========================
   // FETCH TRANSACTIONS
@@ -268,6 +270,14 @@ const AdminTransactions = () => {
   useEffect(() => {
     const fetchTx = async () => {
       try {
+        const token = getToken();
+
+        if (!token) {
+          console.warn("No token found in localStorage");
+          setLoading(false);
+          return;
+        }
+
         const res = await axios.get(
           `${API}/api/admin/transactions`,
           {
@@ -279,24 +289,32 @@ const AdminTransactions = () => {
 
         setTxs(res.data);
       } catch (err) {
-        console.error("Failed to load transactions:", err);
+        console.error(
+          "Failed to load transactions:",
+          err?.response?.data || err.message
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchTx();
-  }, [API, token]);
+  }, [API]);
 
   // =========================
   // UPDATE STATUS
   // =========================
   const updateStatus = async (tx, status) => {
     try {
+      const token = getToken();
+
+      if (!token) {
+        alert("Session expired. Please login again.");
+        return;
+      }
+
       const endpoint =
-        tx.type === "deposit"
-          ? "deposit"
-          : "withdrawal";
+        tx.type === "deposit" ? "deposit" : "withdrawal";
 
       await axios.patch(
         `${API}/api/admin/transactions/${endpoint}/${tx._id}`,
@@ -308,16 +326,16 @@ const AdminTransactions = () => {
         }
       );
 
-      // update UI instantly
       setTxs((prev) =>
         prev.map((item) =>
-          item._id === tx._id
-            ? { ...item, status }
-            : item
+          item._id === tx._id ? { ...item, status } : item
         )
       );
     } catch (err) {
-      console.error("Status update failed:", err);
+      console.error(
+        "Status update failed:",
+        err?.response?.data || err.message
+      );
     }
   };
 
@@ -348,7 +366,7 @@ const AdminTransactions = () => {
     });
 
   // =========================
-  // SEARCH FILTER
+  // FILTER
   // =========================
   const filteredData = useMemo(() => {
     return txs.filter(
@@ -365,9 +383,7 @@ const AdminTransactions = () => {
   // =========================
   // PAGINATION
   // =========================
-  const totalPages = Math.ceil(
-    filteredData.length / rowsPerPage
-  );
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * rowsPerPage,
@@ -375,37 +391,10 @@ const AdminTransactions = () => {
   );
 
   // =========================
-  // EXPORT CSV
+  // LOADING STATE
   // =========================
-  const handleExport = () => {
-    const csv = [
-      ["Reference", "User", "Amount", "Type", "Status", "Date"],
-      ...filteredData.map((t) => [
-        t.reference,
-        t.userEmail,
-        `₦${t.amount}`,
-        t.type,
-        t.status,
-        t.date,
-      ]),
-    ]
-      .map((row) => row.join(","))
-      .join("\n");
-
-    const blob = new Blob([csv], {
-      type: "text/csv;charset=utf-8;",
-    });
-
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "transactions.csv";
-    link.click();
-  };
-
   if (loading) {
-    return (
-      <div className="tx-page">Loading transactions...</div>
-    );
+    return <div className="tx-page">Loading transactions...</div>;
   }
 
   return (
@@ -414,34 +403,21 @@ const AdminTransactions = () => {
         <h2>Transactions</h2>
       </div>
 
-      {/* =========================
-          CONTROLS
-      ========================= */}
+      {/* SEARCH */}
       <div className="table-controls">
         <input
           type="text"
           className="search-input"
-          placeholder="Search by user or reference..."
+          placeholder="Search..."
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
             setCurrentPage(1);
           }}
         />
-
-        <div className="buttons-right">
-          <button
-            className="btn btn-export"
-            onClick={handleExport}
-          >
-            Export CSV
-          </button>
-        </div>
       </div>
 
-      {/* =========================
-          TABLE
-      ========================= */}
+      {/* TABLE */}
       <div className="table-wrapper">
         <table className="tx-table">
           <thead>
@@ -495,7 +471,7 @@ const AdminTransactions = () => {
                       </button>
                     </div>
                   ) : (
-                    <span className="done">—</span>
+                    <span>—</span>
                   )}
                 </td>
               </tr>
@@ -504,9 +480,7 @@ const AdminTransactions = () => {
         </table>
       </div>
 
-      {/* =========================
-          PAGINATION
-      ========================= */}
+      {/* PAGINATION */}
       <div className="pagination">
         <button
           onClick={() =>
@@ -525,10 +499,7 @@ const AdminTransactions = () => {
               Math.min(totalPages, p + 1)
             )
           }
-          disabled={
-            currentPage === totalPages ||
-            totalPages === 0
-          }
+          disabled={currentPage === totalPages}
         >
           Next
         </button>
