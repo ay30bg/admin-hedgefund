@@ -244,7 +244,7 @@
 // export default AdminTransactions;
 
 import React, { useState, useMemo, useEffect } from "react";
-import axios from "axios";
+import api from "../api/api";
 import "../styles/transactions.css";
 
 const AdminTransactions = () => {
@@ -256,25 +256,12 @@ const AdminTransactions = () => {
   const rowsPerPage = 5;
 
   // =========================
-  // GET TOKEN
-  // =========================
-  const token = localStorage.getItem("token");
-
-  // =========================
   // FETCH TRANSACTIONS
   // =========================
   useEffect(() => {
     const fetchTx = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:5000/api/admin/transactions",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
+        const res = await api.get("/api/admin/transactions");
         setTxs(res.data);
       } catch (err) {
         console.error("Failed to load transactions:", err);
@@ -284,26 +271,19 @@ const AdminTransactions = () => {
     };
 
     fetchTx();
-  }, [token]);
+  }, []);
 
   // =========================
-  // UPDATE STATUS (BACKEND)
+  // UPDATE STATUS
   // =========================
   const updateStatus = async (tx, status) => {
     try {
       const endpoint =
-        tx.type === "deposit"
-          ? "deposit"
-          : "withdrawal";
+        tx.type === "deposit" ? "deposit" : "withdrawal";
 
-      await axios.patch(
-        `http://localhost:5000/api/admin/transactions/${endpoint}/${tx._id}`,
-        { status },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      await api.patch(
+        `/api/admin/transactions/${endpoint}/${tx._id}`,
+        { status }
       );
 
       // update UI instantly
@@ -408,7 +388,9 @@ const AdminTransactions = () => {
   };
 
   if (loading) {
-    return <div className="tx-page">Loading transactions...</div>;
+    return (
+      <div className="tx-page">Loading transactions...</div>
+    );
   }
 
   return (
@@ -465,7 +447,6 @@ const AdminTransactions = () => {
                 <td>{tx.reference}</td>
                 <td>{tx.userEmail}</td>
                 <td>${tx.amount.toLocaleString()}</td>
-
                 <td>{formatType(tx.type)}</td>
 
                 <td>
