@@ -15,7 +15,7 @@ function App() {
       <Routes>
 
         {/* Redirect root → admin */}
-        <Route path="/" element={<Navigate to="/admin" replace />} />
+        <Route path="/" element={<Navigate to="/admin/login" replace />} />
 
         {/* Admin Login */}
         <Route path="/admin/login" element={<AdminLogin />} />
