@@ -268,7 +268,12 @@
 
 // export default AdminUsers;
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 import axios from "axios";
 import "../styles/users.css";
 
@@ -296,7 +301,7 @@ const AdminUsers = () => {
   };
 
   // ================= FETCH USERS =================
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -316,16 +321,18 @@ const AdminUsers = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   // ================= SEARCH =================
   const filteredUsers = useMemo(() => {
     return users.filter((u) =>
-      u.email.toLowerCase().includes(search.toLowerCase())
+      u.email
+        .toLowerCase()
+        .includes(search.toLowerCase())
     );
   }, [users, search]);
 
@@ -351,7 +358,10 @@ const AdminUsers = () => {
       setUsers((prev) =>
         prev.map((u) =>
           u._id === id
-            ? { ...u, blocked: data.user.blocked }
+            ? {
+                ...u,
+                blocked: data.user.blocked,
+              }
             : u
         )
       );
@@ -402,7 +412,10 @@ const AdminUsers = () => {
 
     if (!user) return;
 
-    const email = prompt("Edit Email", user.email);
+    const email = prompt(
+      "Edit Email",
+      user.email
+    );
 
     const balance = prompt(
       "Edit Balance",
@@ -442,11 +455,14 @@ const AdminUsers = () => {
 
   // ================= FORMAT DATE =================
   const formatDate = (date) =>
-    new Date(date).toLocaleDateString("en-NG", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
+    new Date(date).toLocaleDateString(
+      "en-NG",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }
+    );
 
   return (
     <div className="users-page">
@@ -487,7 +503,9 @@ const AdminUsers = () => {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="8">Loading users...</td>
+                <td colSpan="8">
+                  Loading users...
+                </td>
               </tr>
             ) : paginatedUsers.length > 0 ? (
               paginatedUsers.map((user) => (
@@ -496,33 +514,41 @@ const AdminUsers = () => {
                   onClick={() =>
                     setSelectedUser(user)
                   }
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                  }}
                 >
-                  <td>{user.email}</td>
+                  <td data-label="Email">
+                    {user.email}
+                  </td>
 
-                  <td>
+                  <td data-label="Balance">
                     $
                     {user.balance?.toLocaleString()}
                   </td>
 
-                  <td>
+                  <td data-label="Total Deposit">
                     $
                     {user.totalDeposit?.toLocaleString()}
                   </td>
 
-                  <td>
-                    {formatDate(user.createdAt)}
+                  <td data-label="Date Joined">
+                    {formatDate(
+                      user.createdAt
+                    )}
                   </td>
 
-                  <td>
-                    {user.activePlans?.length || 0}
+                  <td data-label="Plans">
+                    {user.activePlans
+                      ?.length || 0}
                   </td>
 
-                  <td>
-                    {user.machines?.length || 0}
+                  <td data-label="Machines">
+                    {user.machines?.length ||
+                      0}
                   </td>
 
-                  <td>
+                  <td data-label="Status">
                     <span
                       className={
                         user.blocked
@@ -536,13 +562,16 @@ const AdminUsers = () => {
                     </span>
                   </td>
 
-                  <td>
+                  <td data-label="Action">
                     <div className="actions">
                       <button
                         className="btn block"
                         onClick={(e) => {
                           e.stopPropagation();
-                          toggleBan(user._id);
+
+                          toggleBan(
+                            user._id
+                          );
                         }}
                       >
                         {user.blocked
@@ -554,7 +583,10 @@ const AdminUsers = () => {
                         className="btn edit"
                         onClick={(e) => {
                           e.stopPropagation();
-                          editUser(user._id);
+
+                          editUser(
+                            user._id
+                          );
                         }}
                       >
                         Edit
@@ -564,7 +596,10 @@ const AdminUsers = () => {
                         className="btn delete"
                         onClick={(e) => {
                           e.stopPropagation();
-                          deleteUser(user._id);
+
+                          deleteUser(
+                            user._id
+                          );
                         }}
                       >
                         Delete
@@ -602,7 +637,10 @@ const AdminUsers = () => {
         <button
           onClick={() =>
             setCurrentPage((p) =>
-              Math.min(totalPages, p + 1)
+              Math.min(
+                totalPages,
+                p + 1
+              )
             )
           }
           disabled={
@@ -614,7 +652,7 @@ const AdminUsers = () => {
         </button>
       </div>
 
-      {/* MODAL */}
+      {/* ================= MODAL ================= */}
       {selectedUser && (
         <div
           className="modal-overlay"
@@ -642,12 +680,17 @@ const AdminUsers = () => {
 
             <p>
               <b>Total Deposit:</b> $
-              {selectedUser.totalDeposit}
+              {
+                selectedUser.totalDeposit
+              }
             </p>
 
             <p>
-              <b>Referral Earnings:</b> $
-              {selectedUser.referralEarnings}
+              <b>Referral Earnings:</b>{" "}
+              $
+              {
+                selectedUser.referralEarnings
+              }
             </p>
 
             <p>
@@ -682,11 +725,15 @@ const AdminUsers = () => {
                 ?.length > 0 ? (
                 selectedUser.activePlans.map(
                   (plan, i) => (
-                    <li key={i}>{plan}</li>
+                    <li key={i}>
+                      {plan}
+                    </li>
                   )
                 )
               ) : (
-                <li>No active plans</li>
+                <li>
+                  No active plans
+                </li>
               )}
             </ul>
 
