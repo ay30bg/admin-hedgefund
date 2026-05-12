@@ -273,6 +273,7 @@ import React, {
   useMemo,
   useState,
   useCallback,
+  useMemo as reactUseMemo,
 } from "react";
 import axios from "axios";
 import "../styles/users.css";
@@ -294,11 +295,15 @@ const AdminUsers = () => {
   // ================= TOKEN =================
   const token = localStorage.getItem("token");
 
-  const authConfig = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  // ================= AUTH CONFIG =================
+  const authConfig = reactUseMemo(
+    () => ({
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+    [token]
+  );
 
   // ================= FETCH USERS =================
   const fetchUsers = useCallback(async () => {
@@ -321,7 +326,7 @@ const AdminUsers = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [authConfig]);
 
   useEffect(() => {
     fetchUsers();
@@ -518,37 +523,35 @@ const AdminUsers = () => {
                     cursor: "pointer",
                   }}
                 >
-                  <td data-label="Email">
-                    {user.email}
-                  </td>
+                  <td>{user.email}</td>
 
-                  <td data-label="Balance">
+                  <td>
                     $
                     {user.balance?.toLocaleString()}
                   </td>
 
-                  <td data-label="Total Deposit">
+                  <td>
                     $
                     {user.totalDeposit?.toLocaleString()}
                   </td>
 
-                  <td data-label="Date Joined">
+                  <td>
                     {formatDate(
                       user.createdAt
                     )}
                   </td>
 
-                  <td data-label="Plans">
+                  <td>
                     {user.activePlans
                       ?.length || 0}
                   </td>
 
-                  <td data-label="Machines">
+                  <td>
                     {user.machines?.length ||
                       0}
                   </td>
 
-                  <td data-label="Status">
+                  <td>
                     <span
                       className={
                         user.blocked
@@ -562,7 +565,7 @@ const AdminUsers = () => {
                     </span>
                   </td>
 
-                  <td data-label="Action">
+                  <td>
                     <div className="actions">
                       <button
                         className="btn block"
@@ -652,7 +655,7 @@ const AdminUsers = () => {
         </button>
       </div>
 
-      {/* ================= MODAL ================= */}
+      {/* MODAL */}
       {selectedUser && (
         <div
           className="modal-overlay"
