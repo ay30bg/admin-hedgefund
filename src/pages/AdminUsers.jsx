@@ -1309,20 +1309,24 @@ const AdminUsers = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] =
+    useState(null);
 
   // ================= EDIT MODAL =================
-  const [editModal, setEditModal] = useState(false);
+  const [editModal, setEditModal] =
+    useState(false);
 
-  const [editForm, setEditForm] = useState({
-    email: "",
-    balance: "",
-  });
+  const [editForm, setEditForm] =
+    useState({
+      email: "",
+      balance: "",
+    });
 
   const rowsPerPage = 5;
 
   // ================= TOKEN =================
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("token");
 
   // ================= AUTH CONFIG =================
   const authConfig = reactUseMemo(
@@ -1394,7 +1398,8 @@ const AdminUsers = () => {
           u._id === id
             ? {
                 ...u,
-                blocked: data.user.blocked,
+                blocked:
+                  data.user.blocked,
               }
             : u
         )
@@ -1415,7 +1420,11 @@ const AdminUsers = () => {
 
   // ================= DELETE USER =================
   const deleteUser = async (id) => {
-    if (!window.confirm("Delete this user?"))
+    if (
+      !window.confirm(
+        "Delete this user?"
+      )
+    )
       return;
 
     try {
@@ -1425,7 +1434,9 @@ const AdminUsers = () => {
       );
 
       setUsers((prev) =>
-        prev.filter((u) => u._id !== id)
+        prev.filter(
+          (u) => u._id !== id
+        )
       );
 
       if (selectedUser?._id === id) {
@@ -1469,7 +1480,8 @@ const AdminUsers = () => {
 
       setUsers((prev) =>
         prev.map((u) =>
-          u._id === selectedUser._id
+          u._id ===
+          selectedUser._id
             ? data.user
             : u
         )
@@ -1479,7 +1491,9 @@ const AdminUsers = () => {
 
       setEditModal(false);
 
-      alert("User updated successfully");
+      alert(
+        "User updated successfully"
+      );
     } catch (error) {
       console.error(error);
 
@@ -1546,104 +1560,117 @@ const AdminUsers = () => {
               </tr>
             ) : paginatedUsers.length >
               0 ? (
-              paginatedUsers.map((user) => (
-                <tr
-                  key={user._id}
-                  onClick={() =>
-                    setSelectedUser(user)
-                  }
-                  style={{
-                    cursor: "pointer",
-                  }}
-                >
-                  <td data-label="Email">
-                    {user.email}
-                  </td>
+              paginatedUsers.map(
+                (user) => (
+                  <tr
+                    key={user._id}
+                    onClick={() =>
+                      setSelectedUser(
+                        user
+                      )
+                    }
+                    style={{
+                      cursor:
+                        "pointer",
+                    }}
+                  >
+                    <td data-label="Email">
+                      {user.email}
+                    </td>
 
-                  <td data-label="Balance">
-                    $
-                    {user.balance?.toLocaleString()}
-                  </td>
+                    <td data-label="Balance">
+                      $
+                      {user.balance?.toLocaleString()}
+                    </td>
 
-                  <td data-label="Total Deposit">
-                    $
-                    {user.totalDeposit?.toLocaleString()}
-                  </td>
+                    <td data-label="Total Deposit">
+                      $
+                      {user.totalDeposit?.toLocaleString()}
+                    </td>
 
-                  <td data-label="Date Joined">
-                    {formatDate(
-                      user.createdAt
-                    )}
-                  </td>
+                    <td data-label="Date Joined">
+                      {formatDate(
+                        user.createdAt
+                      )}
+                    </td>
 
-                  <td data-label="Plans">
-                    {user.activePlans
-                      ?.length || 0}
-                  </td>
+                    <td data-label="Plans">
+                      {user.activePlans
+                        ?.length || 0}
+                    </td>
 
-                  <td data-label="Machines">
-                    {user.machines
-                      ?.length || 0}
-                  </td>
+                    <td data-label="Machines">
+                      {user.machines
+                        ?.length || 0}
+                    </td>
 
-                  <td data-label="Status">
-                    <span
-                      className={
-                        user.blocked
-                          ? "status blocked"
-                          : "status active"
-                      }
-                    >
-                      {user.blocked
-                        ? "Banned"
-                        : "Active"}
-                    </span>
-                  </td>
-
-                  <td data-label="Action">
-                    <div className="actions">
-                      <button
-                        className="btn block"
-                        onClick={(e) => {
-                          e.stopPropagation();
-
-                          toggleBan(
-                            user._id
-                          );
-                        }}
+                    <td data-label="Status">
+                      <span
+                        className={
+                          user.blocked
+                            ? "status blocked"
+                            : "status active"
+                        }
                       >
                         {user.blocked
-                          ? "Unban"
-                          : "Ban"}
-                      </button>
+                          ? "Banned"
+                          : "Active"}
+                      </span>
+                    </td>
 
-                      <button
-                        className="btn edit"
-                        onClick={(e) => {
-                          e.stopPropagation();
+                    <td data-label="Action">
+                      <div className="actions">
+                        <button
+                          className="btn block"
+                          onClick={(
+                            e
+                          ) => {
+                            e.stopPropagation();
 
-                          editUser(user);
-                        }}
-                      >
-                        Edit
-                      </button>
+                            toggleBan(
+                              user._id
+                            );
+                          }}
+                        >
+                          {user.blocked
+                            ? "Unban"
+                            : "Ban"}
+                        </button>
 
-                      <button
-                        className="btn delete"
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        <button
+                          className="btn edit"
+                          onClick={(
+                            e
+                          ) => {
+                            e.stopPropagation();
 
-                          deleteUser(
-                            user._id
-                          );
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
+                            editUser(
+                              user
+                            );
+                          }}
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          className="btn delete"
+                          onClick={(
+                            e
+                          ) => {
+                            e.stopPropagation();
+
+                            deleteUser(
+                              user._id
+                            );
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              )
             ) : (
               <tr>
                 <td colSpan="8">
@@ -1660,10 +1687,15 @@ const AdminUsers = () => {
         <button
           onClick={() =>
             setCurrentPage((p) =>
-              Math.max(1, p - 1)
+              Math.max(
+                1,
+                p - 1
+              )
             )
           }
-          disabled={currentPage === 1}
+          disabled={
+            currentPage === 1
+          }
         >
           Prev
         </button>
@@ -1680,7 +1712,8 @@ const AdminUsers = () => {
             )
           }
           disabled={
-            currentPage === totalPages ||
+            currentPage ===
+              totalPages ||
             totalPages === 0
           }
         >
@@ -1689,130 +1722,171 @@ const AdminUsers = () => {
       </div>
 
       {/* USER DETAILS MODAL */}
-      {selectedUser && !editModal && (
-        <div
-          className="modal-overlay"
-          onClick={(e) => {
-            if (
-              e.target ===
-              e.currentTarget
-            ) {
-              setSelectedUser(null);
-            }
-          }}
-        >
+      {selectedUser &&
+        !editModal && (
           <div
-            className="modal"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
+            className="modal-overlay"
+            onClick={(e) => {
+              if (
+                e.target ===
+                e.currentTarget
+              ) {
+                setSelectedUser(
+                  null
+                );
+              }
+            }}
           >
-            <h2>User Details</h2>
-
-            <p>
-              <b>Email:</b>{" "}
-              {selectedUser.email}
-            </p>
-
-            <p>
-              <b>Balance:</b> $
-              {selectedUser.balance}
-            </p>
-
-            <p>
-              <b>Total Deposit:</b> $
-              {
-                selectedUser.totalDeposit
-              }
-            </p>
-
-            <p>
-              <b>Referral Earnings:</b>{" "}
-              $
-              {
-                selectedUser.referralEarnings
-              }
-            </p>
-
-            <p>
-              <b>Wallet Address:</b>{" "}
-              {selectedUser.walletAddress ||
-                "N/A"}
-            </p>
-
-            <p>
-              <b>Network:</b>{" "}
-              {selectedUser.network}
-            </p>
-
-            <p>
-              <b>Verified:</b>{" "}
-              {selectedUser.isVerified
-                ? "Yes"
-                : "No"}
-            </p>
-
-            <p>
-              <b>Status:</b>{" "}
-              {selectedUser.blocked
-                ? "Banned"
-                : "Active"}
-            </p>
-
-            <p>
-              <b>Date Joined:</b>{" "}
-              {formatDate(
-                selectedUser.createdAt
-              )}
-            </p>
-
-            <h3>Active Plans</h3>
-
-            <ul>
-              {selectedUser.activePlans
-                ?.length > 0 ? (
-                selectedUser.activePlans.map(
-                  (plan, i) => (
-                    <li key={i}>
-                      {plan}
-                    </li>
-                  )
-                )
-              ) : (
-                <li>
-                  No active plans
-                </li>
-              )}
-            </ul>
-
-            <h3>Machines</h3>
-
-            <ul>
-              {selectedUser.machines
-                ?.length > 0 ? (
-                selectedUser.machines.map(
-                  (m, i) => (
-                    <li key={i}>
-                      {m.name}
-                    </li>
-                  )
-                )
-              ) : (
-                <li>No machines</li>
-              )}
-            </ul>
-
-            <button
-              className="btn close"
-              onClick={() =>
-                setSelectedUser(null)
+            <div
+              className="modal"
+              onClick={(e) =>
+                e.stopPropagation()
               }
             >
-              Close
-            </button>
+              <h2>
+                User Details
+              </h2>
+
+              <p>
+                <b>Email:</b>{" "}
+                {
+                  selectedUser.email
+                }
+              </p>
+
+              <p>
+                <b>Balance:</b> $
+                {
+                  selectedUser.balance
+                }
+              </p>
+
+              <p>
+                <b>
+                  Total Deposit:
+                </b>{" "}
+                $
+                {
+                  selectedUser.totalDeposit
+                }
+              </p>
+
+              <p>
+                <b>
+                  Referral Earnings:
+                </b>{" "}
+                $
+                {
+                  selectedUser.referralEarnings
+                }
+              </p>
+
+              <p>
+                <b>
+                  Wallet Address:
+                </b>{" "}
+                {selectedUser.walletAddress ||
+                  "N/A"}
+              </p>
+
+              <p>
+                <b>Network:</b>{" "}
+                {
+                  selectedUser.network
+                }
+              </p>
+
+              <p>
+                <b>
+                  Verified:
+                </b>{" "}
+                {selectedUser.isVerified
+                  ? "Yes"
+                  : "No"}
+              </p>
+
+              <p>
+                <b>Status:</b>{" "}
+                {selectedUser.blocked
+                  ? "Banned"
+                  : "Active"}
+              </p>
+
+              <p>
+                <b>
+                  Date Joined:
+                </b>{" "}
+                {formatDate(
+                  selectedUser.createdAt
+                )}
+              </p>
+
+              <h3>
+                Active Plans
+              </h3>
+
+              <ul>
+                {selectedUser.activePlans
+                  ?.length >
+                0 ? (
+                  selectedUser.activePlans.map(
+                    (
+                      plan,
+                      i
+                    ) => (
+                      <li
+                        key={i}
+                      >
+                        {plan}
+                      </li>
+                    )
+                  )
+                ) : (
+                  <li>
+                    No active
+                    plans
+                  </li>
+                )}
+              </ul>
+
+              <h3>Machines</h3>
+
+              <ul>
+                {selectedUser.machines
+                  ?.length >
+                0 ? (
+                  selectedUser.machines.map(
+                    (
+                      m,
+                      i
+                    ) => (
+                      <li
+                        key={i}
+                      >
+                        {m.name}
+                      </li>
+                    )
+                  )
+                ) : (
+                  <li>
+                    No machines
+                  </li>
+                )}
+              </ul>
+
+              <button
+                className="btn close"
+                onClick={() =>
+                  setSelectedUser(
+                    null
+                  )
+                }
+              >
+                Close
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       {/* EDIT MODAL */}
       {editModal && (
@@ -1824,6 +1898,9 @@ const AdminUsers = () => {
               e.currentTarget
             ) {
               setEditModal(false);
+              setSelectedUser(
+                null
+              );
             }
           }}
         >
@@ -1840,28 +1917,36 @@ const AdminUsers = () => {
 
               <input
                 type="email"
-                value={editForm.email}
+                value={
+                  editForm.email
+                }
                 onChange={(e) =>
                   setEditForm({
                     ...editForm,
                     email:
-                      e.target.value,
+                      e.target
+                        .value,
                   })
                 }
               />
             </div>
 
             <div className="form-group">
-              <label>Balance</label>
+              <label>
+                Balance
+              </label>
 
               <input
                 type="number"
-                value={editForm.balance}
+                value={
+                  editForm.balance
+                }
                 onChange={(e) =>
                   setEditForm({
                     ...editForm,
                     balance:
-                      e.target.value,
+                      e.target
+                        .value,
                   })
                 }
               />
@@ -1870,16 +1955,23 @@ const AdminUsers = () => {
             <div className="modal-actions">
               <button
                 className="btn close"
-                onClick={() =>
-                  setEditModal(false)
-                }
+                onClick={() => {
+                  setEditModal(
+                    false
+                  );
+                  setSelectedUser(
+                    null
+                  );
+                }}
               >
                 Cancel
               </button>
 
               <button
                 className="btn edit"
-                onClick={updateUser}
+                onClick={
+                  updateUser
+                }
               >
                 Save Changes
               </button>
