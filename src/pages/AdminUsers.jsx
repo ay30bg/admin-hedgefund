@@ -998,16 +998,6 @@ const AdminUsers = () => {
   const [selectedUser, setSelectedUser] =
     useState(null);
 
-  // ================= EDIT MODAL =================
-  const [editModal, setEditModal] =
-    useState(false);
-
-  const [editForm, setEditForm] =
-    useState({
-      email: "",
-      balance: "",
-    });
-
   const rowsPerPage = 5;
 
   // ================= TOKEN =================
@@ -1067,11 +1057,6 @@ const AdminUsers = () => {
     }, [users, search]);
 
   // ================= PAGINATION =================
-  const totalPages = Math.ceil(
-    filteredUsers.length /
-      rowsPerPage
-  );
-
   const paginatedUsers =
     filteredUsers.slice(
       (currentPage - 1) *
@@ -1155,67 +1140,6 @@ const AdminUsers = () => {
     }
   };
 
-  // ================= OPEN EDIT MODAL =================
-  const editUser = (user) => {
-    setEditForm({
-      email:
-        user.email || "",
-
-      balance:
-        user.balance || 0,
-    });
-
-    setSelectedUser(user);
-
-    setEditModal(true);
-  };
-
-  // ================= UPDATE USER =================
-  const updateUser = async () => {
-    try {
-      const { data } =
-        await axios.put(
-          `${API_URL}/api/admin/users/${selectedUser._id}`,
-          {
-            email:
-              editForm.email,
-
-            balance: Number(
-              editForm.balance
-            ),
-          },
-          authConfig
-        );
-
-      setUsers((prev) =>
-        prev.map((u) =>
-          u._id ===
-          selectedUser._id
-            ? data.user
-            : u
-        )
-      );
-
-      setSelectedUser(
-        data.user
-      );
-
-      setEditModal(false);
-
-      alert(
-        "User updated successfully"
-      );
-    } catch (error) {
-      console.error(error);
-
-      alert(
-        error.response?.data
-          ?.message ||
-          "Failed to update user"
-      );
-    }
-  };
-
   // ================= FORMAT DATE =================
   const formatDate = (date) =>
     new Date(date).toLocaleDateString(
@@ -1229,11 +1153,12 @@ const AdminUsers = () => {
 
   return (
     <div className="users-page">
+      {/* ================= HEADER ================= */}
       <div className="users-header">
         <h2>Users</h2>
       </div>
 
-      {/* SEARCH */}
+      {/* ================= SEARCH ================= */}
       <div className="table-controls">
         <input
           type="text"
@@ -1250,7 +1175,7 @@ const AdminUsers = () => {
         />
       </div>
 
-      {/* TABLE */}
+      {/* ================= TABLE ================= */}
       <div className="table-wrapper">
         <table className="users-table">
           <thead>
@@ -1314,15 +1239,13 @@ const AdminUsers = () => {
                     </td>
 
                     <td data-label="Plans">
-                      {
-                        user.activePlansCount
-                      }
+                      {user.activePlansCount ||
+                        0}
                     </td>
 
                     <td data-label="Machines">
-                      {
-                        user.activeMachinesCount
-                      }
+                      {user.activeMachinesCount ||
+                        0}
                     </td>
 
                     <td data-label="Status">
@@ -1359,21 +1282,6 @@ const AdminUsers = () => {
                         </button>
 
                         <button
-                          className="btn edit"
-                          onClick={(
-                            e
-                          ) => {
-                            e.stopPropagation();
-
-                            editUser(
-                              user
-                            );
-                          }}
-                        >
-                          Edit
-                        </button>
-
-                        <button
                           className="btn delete"
                           onClick={(
                             e
@@ -1402,6 +1310,247 @@ const AdminUsers = () => {
           </tbody>
         </table>
       </div>
+
+      {/* ================= PAGINATION ================= */}
+      <div className="pagination">
+        <button
+          onClick={() =>
+            setCurrentPage((p) =>
+              Math.max(
+                1,
+                p - 1
+              )
+            )
+          }
+          disabled={
+            currentPage === 1
+          }
+        >
+          Prev
+        </button>
+
+        <span>
+          {currentPage}
+        </span>
+
+        <button
+          onClick={() =>
+            setCurrentPage((p) =>
+              paginatedUsers.length <
+              rowsPerPage
+                ? p
+                : p + 1
+            )
+          }
+          disabled={
+            paginatedUsers.length <
+            rowsPerPage
+          }
+        >
+          Next
+        </button>
+      </div>
+
+      {/* ================= USER DETAILS MODAL ================= */}
+      {selectedUser && (
+        <div
+          className="modal-overlay"
+          onClick={(e) => {
+            if (
+              e.target ===
+              e.currentTarget
+            ) {
+              setSelectedUser(
+                null
+              );
+            }
+          }}
+        >
+          <div
+            className="modal"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
+            <h2>
+              User Details
+            </h2>
+
+            <p>
+              <b>Email:</b>{" "}
+              {
+                selectedUser.email
+              }
+            </p>
+
+            <p>
+              <b>Balance:</b> $
+              {
+                selectedUser.balance
+              }
+            </p>
+
+            <p>
+              <b>
+                Total Deposit:
+              </b>{" "}
+              $
+              {
+                selectedUser.totalDeposit
+              }
+            </p>
+
+            <p>
+              <b>
+                Total Withdraw:
+              </b>{" "}
+              $
+              {
+                selectedUser.totalWithdraw
+              }
+            </p>
+
+            <p>
+              <b>
+                Referral Earnings:
+              </b>{" "}
+              $
+              {
+                selectedUser.referralEarnings
+              }
+            </p>
+
+            <p>
+              <b>
+                Wallet Address:
+              </b>{" "}
+              {selectedUser.walletAddress ||
+                "N/A"}
+            </p>
+
+            <p>
+              <b>Network:</b>{" "}
+              {
+                selectedUser.network
+              }
+            </p>
+
+            <p>
+              <b>
+                Verified:
+              </b>{" "}
+              {selectedUser.isVerified
+                ? "Yes"
+                : "No"}
+            </p>
+
+            <p>
+              <b>Status:</b>{" "}
+              {selectedUser.blocked
+                ? "Banned"
+                : "Active"}
+            </p>
+
+            <p>
+              <b>
+                Active Plans:
+              </b>{" "}
+              {selectedUser.activePlansCount ||
+                0}
+            </p>
+
+            <p>
+              <b>
+                Active Machines:
+              </b>{" "}
+              {selectedUser.activeMachinesCount ||
+                0}
+            </p>
+
+            <p>
+              <b>
+                Date Joined:
+              </b>{" "}
+              {formatDate(
+                selectedUser.createdAt
+              )}
+            </p>
+
+            {/* ================= PLANS ================= */}
+            <h3>
+              Active Plans
+            </h3>
+
+            <ul>
+              {selectedUser.activePlans
+                ?.length > 0 ? (
+                selectedUser.activePlans.map(
+                  (
+                    plan,
+                    i
+                  ) => (
+                    <li
+                      key={i}
+                    >
+                      {plan}
+                    </li>
+                  )
+                )
+              ) : (
+                <li>
+                  No active
+                  plans
+                </li>
+              )}
+            </ul>
+
+            {/* ================= MACHINES ================= */}
+            <h3>
+              Machines
+            </h3>
+
+            <ul>
+              {selectedUser.machines
+                ?.length > 0 ? (
+                selectedUser.machines.map(
+                  (
+                    machine,
+                    i
+                  ) => (
+                    <li
+                      key={i}
+                    >
+                      {
+                        machine.name
+                      }{" "}
+                      (
+                      {
+                        machine.status
+                      }
+                      )
+                    </li>
+                  )
+                )
+              ) : (
+                <li>
+                  No machines
+                </li>
+              )}
+            </ul>
+
+            <button
+              className="btn close"
+              onClick={() =>
+                setSelectedUser(
+                  null
+                )
+              }
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
