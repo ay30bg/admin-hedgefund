@@ -1160,6 +1160,7 @@ const AdminUsers = () => {
     setEditForm({
       email:
         user.email || "",
+
       balance:
         user.balance || 0,
     });
@@ -1258,8 +1259,8 @@ const AdminUsers = () => {
               <th>Balance</th>
               <th>Total Deposit</th>
               <th>Date Joined</th>
-              <th>Active Plans</th>
-              <th>Active Machines</th>
+              <th>Plans</th>
+              <th>Machines</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -1312,13 +1313,13 @@ const AdminUsers = () => {
                       )}
                     </td>
 
-                    <td data-label="Active Plans">
+                    <td data-label="Plans">
                       {
                         user.activePlansCount
                       }
                     </td>
 
-                    <td data-label="Active Machines">
+                    <td data-label="Machines">
                       {
                         user.activeMachinesCount
                       }
@@ -1401,335 +1402,6 @@ const AdminUsers = () => {
           </tbody>
         </table>
       </div>
-
-      {/* PAGINATION */}
-      <div className="pagination">
-        <button
-          onClick={() =>
-            setCurrentPage((p) =>
-              Math.max(
-                1,
-                p - 1
-              )
-            )
-          }
-          disabled={
-            currentPage === 1
-          }
-        >
-          Prev
-        </button>
-
-        <span>
-          {currentPage}
-        </span>
-
-        <button
-          onClick={() =>
-            setCurrentPage((p) =>
-              Math.min(
-                totalPages,
-                p + 1
-              )
-            )
-          }
-          disabled={
-            currentPage ===
-              totalPages ||
-            totalPages === 0
-          }
-        >
-          Next
-        </button>
-      </div>
-
-      {/* USER DETAILS MODAL */}
-      {selectedUser &&
-        !editModal && (
-          <div
-            className="modal-overlay"
-            onClick={(e) => {
-              if (
-                e.target ===
-                e.currentTarget
-              ) {
-                setSelectedUser(
-                  null
-                );
-              }
-            }}
-          >
-            <div
-              className="modal"
-              onClick={(e) =>
-                e.stopPropagation()
-              }
-            >
-              <h2>
-                User Details
-              </h2>
-
-              <p>
-                <b>Email:</b>{" "}
-                {
-                  selectedUser.email
-                }
-              </p>
-
-              <p>
-                <b>Balance:</b>{" "}
-                $
-                {
-                  selectedUser.balance
-                }
-              </p>
-
-              <p>
-                <b>
-                  Total Deposit:
-                </b>{" "}
-                $
-                {
-                  selectedUser.totalDeposit
-                }
-              </p>
-
-              <p>
-                <b>
-                  Referral Earnings:
-                </b>{" "}
-                $
-                {
-                  selectedUser.referralEarnings
-                }
-              </p>
-
-              <p>
-                <b>
-                  Wallet Address:
-                </b>{" "}
-                {selectedUser.walletAddress ||
-                  "N/A"}
-              </p>
-
-              <p>
-                <b>Network:</b>{" "}
-                {
-                  selectedUser.network
-                }
-              </p>
-
-              <p>
-                <b>
-                  Verified:
-                </b>{" "}
-                {selectedUser.isVerified
-                  ? "Yes"
-                  : "No"}
-              </p>
-
-              <p>
-                <b>Status:</b>{" "}
-                {selectedUser.blocked
-                  ? "Banned"
-                  : "Active"}
-              </p>
-
-              <p>
-                <b>
-                  Active Plans:
-                </b>{" "}
-                {
-                  selectedUser.activePlansCount
-                }
-              </p>
-
-              <p>
-                <b>
-                  Active Machines:
-                </b>{" "}
-                {
-                  selectedUser.activeMachinesCount
-                }
-              </p>
-
-              <p>
-                <b>
-                  Date Joined:
-                </b>{" "}
-                {formatDate(
-                  selectedUser.createdAt
-                )}
-              </p>
-
-              <h3>
-                Active Plans
-              </h3>
-
-              <ul>
-                {selectedUser.activePlans
-                  ?.length >
-                0 ? (
-                  selectedUser.activePlans.map(
-                    (
-                      plan,
-                      i
-                    ) => (
-                      <li
-                        key={i}
-                      >
-                        {plan.name ||
-                          "Unnamed Plan"}
-                      </li>
-                    )
-                  )
-                ) : (
-                  <li>
-                    No active
-                    plans
-                  </li>
-                )}
-              </ul>
-
-              <h3>
-                Machines
-              </h3>
-
-              <ul>
-                {selectedUser.machines
-                  ?.length >
-                0 ? (
-                  selectedUser.machines.map(
-                    (
-                      machine,
-                      i
-                    ) => (
-                      <li
-                        key={i}
-                      >
-                        {machine.name ||
-                          "Unnamed Machine"}
-                      </li>
-                    )
-                  )
-                ) : (
-                  <li>
-                    No machines
-                  </li>
-                )}
-              </ul>
-
-              <button
-                className="btn close"
-                onClick={() =>
-                  setSelectedUser(
-                    null
-                  )
-                }
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
-
-      {/* EDIT MODAL */}
-      {editModal && (
-        <div
-          className="modal-overlay"
-          onClick={(e) => {
-            if (
-              e.target ===
-              e.currentTarget
-            ) {
-              setEditModal(false);
-
-              setSelectedUser(
-                null
-              );
-            }
-          }}
-        >
-          <div
-            className="modal"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
-          >
-            <h2>
-              Edit User
-            </h2>
-
-            <div className="form-group">
-              <label>
-                Email
-              </label>
-
-              <input
-                type="email"
-                value={
-                  editForm.email
-                }
-                onChange={(e) =>
-                  setEditForm({
-                    ...editForm,
-                    email:
-                      e.target
-                        .value,
-                  })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>
-                Balance
-              </label>
-
-              <input
-                type="number"
-                value={
-                  editForm.balance
-                }
-                onChange={(e) =>
-                  setEditForm({
-                    ...editForm,
-                    balance:
-                      e.target
-                        .value,
-                  })
-                }
-              />
-            </div>
-
-            <div className="modal-actions">
-              <button
-                className="btn close"
-                onClick={() => {
-                  setEditModal(
-                    false
-                  );
-
-                  setSelectedUser(
-                    null
-                  );
-                }}
-              >
-                Cancel
-              </button>
-
-              <button
-                className="btn edit"
-                onClick={
-                  updateUser
-                }
-              >
-                Save Changes
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
