@@ -1699,9 +1699,13 @@ const AdminUsers = () => {
       {selectedUser && !editModal && (
         <div
           className="modal-overlay"
-          onClick={() =>
-            setSelectedUser(null)
-          }
+          onClick={(e) => {
+            if (
+              e.target === e.currentTarget
+            ) {
+              setSelectedUser(null);
+            }
+          }}
         >
           <div
             className="modal"
@@ -1826,9 +1830,13 @@ const AdminUsers = () => {
       {editModal && (
         <div
           className="modal-overlay"
-          onClick={() =>
-            setEditModal(false)
-          }
+          onClick={(e) => {
+            if (
+              e.target === e.currentTarget
+            ) {
+              setEditModal(false);
+            }
+          }}
         >
           <div
             className="modal"
