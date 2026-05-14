@@ -1257,8 +1257,6 @@ const AdminUsers = () => {
               <th>Balance</th>
               <th>Total Deposit</th>
               <th>Date Joined</th>
-              <th>Plans</th>
-              <th>Machines</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -1306,16 +1304,6 @@ const AdminUsers = () => {
                       {formatDate(
                         user.createdAt
                       )}
-                    </td>
-
-                    <td data-label="Plans">
-                      {user.activePlans
-                        ?.length || 0}
-                    </td>
-
-                    <td data-label="Machines">
-                      {user.machines
-                        ?.length || 0}
                     </td>
 
                     <td data-label="Status">
