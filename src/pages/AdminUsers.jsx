@@ -1,272 +1,272 @@
-// // // import React, { useState, useMemo } from "react";
-// // // import "../styles/users.css";
+// // import React, { useState, useMemo } from "react";
+// // import "../styles/users.css";
 
-// // // const AdminUsers = () => {
-// // //   const [users, setUsers] = useState([
-// // //     {
-// // //       _id: "1",
-// // //       email: "user1@mail.com",
-// // //       balance: 500,
-// // //       totalDeposit: 2000,
-// // //       dateJoined: "2026-01-12",
-// // //       blocked: false,
-// // //       activePlans: ["Starter", "Pro"],
-// // //       machines: [{ name: "Machine A" }, { name: "Machine B" }],
-// // //     },
-// // //     {
-// // //       _id: "2",
-// // //       email: "user2@mail.com",
-// // //       balance: 1200,
-// // //       totalDeposit: 5000,
-// // //       dateJoined: "2026-02-03",
-// // //       blocked: true,
-// // //       activePlans: ["Gold"],
-// // //       machines: [{ name: "Machine C" }],
-// // //     },
-// // //   ]);
+// // const AdminUsers = () => {
+// //   const [users, setUsers] = useState([
+// //     {
+// //       _id: "1",
+// //       email: "user1@mail.com",
+// //       balance: 500,
+// //       totalDeposit: 2000,
+// //       dateJoined: "2026-01-12",
+// //       blocked: false,
+// //       activePlans: ["Starter", "Pro"],
+// //       machines: [{ name: "Machine A" }, { name: "Machine B" }],
+// //     },
+// //     {
+// //       _id: "2",
+// //       email: "user2@mail.com",
+// //       balance: 1200,
+// //       totalDeposit: 5000,
+// //       dateJoined: "2026-02-03",
+// //       blocked: true,
+// //       activePlans: ["Gold"],
+// //       machines: [{ name: "Machine C" }],
+// //     },
+// //   ]);
 
-// // //   const [search, setSearch] = useState("");
-// // //   const [currentPage, setCurrentPage] = useState(1);
-// // //   const rowsPerPage = 5;
+// //   const [search, setSearch] = useState("");
+// //   const [currentPage, setCurrentPage] = useState(1);
+// //   const rowsPerPage = 5;
 
-// // //   // modal state
-// // //   const [selectedUser, setSelectedUser] = useState(null);
+// //   // modal state
+// //   const [selectedUser, setSelectedUser] = useState(null);
 
-// // //   const filteredUsers = useMemo(() => {
-// // //     return users.filter((u) =>
-// // //       u.email.toLowerCase().includes(search.toLowerCase())
-// // //     );
-// // //   }, [users, search]);
+// //   const filteredUsers = useMemo(() => {
+// //     return users.filter((u) =>
+// //       u.email.toLowerCase().includes(search.toLowerCase())
+// //     );
+// //   }, [users, search]);
 
-// // //   const totalPages = Math.ceil(filteredUsers.length / rowsPerPage);
+// //   const totalPages = Math.ceil(filteredUsers.length / rowsPerPage);
 
-// // //   const paginatedUsers = filteredUsers.slice(
-// // //     (currentPage - 1) * rowsPerPage,
-// // //     currentPage * rowsPerPage
-// // //   );
+// //   const paginatedUsers = filteredUsers.slice(
+// //     (currentPage - 1) * rowsPerPage,
+// //     currentPage * rowsPerPage
+// //   );
 
-// // //   const toggleBan = (id) => {
-// // //     setUsers((prev) =>
-// // //       prev.map((u) =>
-// // //         u._id === id ? { ...u, blocked: !u.blocked } : u
-// // //       )
-// // //     );
-// // //   };
+// //   const toggleBan = (id) => {
+// //     setUsers((prev) =>
+// //       prev.map((u) =>
+// //         u._id === id ? { ...u, blocked: !u.blocked } : u
+// //       )
+// //     );
+// //   };
 
-// // //   const deleteUser = (id) => {
-// // //     if (!window.confirm("Delete this user?")) return;
-// // //     setUsers((prev) => prev.filter((u) => u._id !== id));
-// // //   };
+// //   const deleteUser = (id) => {
+// //     if (!window.confirm("Delete this user?")) return;
+// //     setUsers((prev) => prev.filter((u) => u._id !== id));
+// //   };
 
-// // //   const editUser = (id) => {
-// // //     const user = users.find((u) => u._id === id);
-// // //     if (!user) return;
+// //   const editUser = (id) => {
+// //     const user = users.find((u) => u._id === id);
+// //     if (!user) return;
 
-// // //     const email = prompt("Edit Email", user.email);
-// // //     const balance = prompt("Edit Balance", user.balance);
+// //     const email = prompt("Edit Email", user.email);
+// //     const balance = prompt("Edit Balance", user.balance);
 
-// // //     if (!email || !balance) return;
+// //     if (!email || !balance) return;
 
-// // //     setUsers((prev) =>
-// // //       prev.map((u) =>
-// // //         u._id === id
-// // //           ? { ...u, email, balance: Number(balance) }
-// // //           : u
-// // //       )
-// // //     );
-// // //   };
+// //     setUsers((prev) =>
+// //       prev.map((u) =>
+// //         u._id === id
+// //           ? { ...u, email, balance: Number(balance) }
+// //           : u
+// //       )
+// //     );
+// //   };
 
-// // //   const formatDate = (date) =>
-// // //     new Date(date).toLocaleDateString("en-NG", {
-// // //       day: "2-digit",
-// // //       month: "short",
-// // //       year: "numeric",
-// // //     });
+// //   const formatDate = (date) =>
+// //     new Date(date).toLocaleDateString("en-NG", {
+// //       day: "2-digit",
+// //       month: "short",
+// //       year: "numeric",
+// //     });
 
-// // //   return (
-// // //     <div className="users-page">
-// // //       <div className="users-header">
-// // //         <h2>Users</h2>
-// // //       </div>
+// //   return (
+// //     <div className="users-page">
+// //       <div className="users-header">
+// //         <h2>Users</h2>
+// //       </div>
 
-// // //       {/* SEARCH */}
-// // //       <div className="table-controls">
-// // //         <input
-// // //           type="text"
-// // //           className="search-input"
-// // //           placeholder="Search by email..."
-// // //           value={search}
-// // //           onChange={(e) => {
-// // //             setSearch(e.target.value);
-// // //             setCurrentPage(1);
-// // //           }}
-// // //         />
-// // //       </div>
+// //       {/* SEARCH */}
+// //       <div className="table-controls">
+// //         <input
+// //           type="text"
+// //           className="search-input"
+// //           placeholder="Search by email..."
+// //           value={search}
+// //           onChange={(e) => {
+// //             setSearch(e.target.value);
+// //             setCurrentPage(1);
+// //           }}
+// //         />
+// //       </div>
 
-// // //       {/* TABLE */}
-// // //       <div className="table-wrapper">
-// // //         <table className="users-table">
-// // //           <thead>
-// // //             <tr>
-// // //               <th>Email</th>
-// // //               <th>Balance</th>
-// // //               <th>Total Deposit</th>
-// // //               <th>Date Joined</th>
-// // //               <th>Plans</th>
-// // //               <th>Machines</th>
-// // //               <th>Status</th>
-// // //               <th>Action</th>
-// // //             </tr>
-// // //           </thead>
+// //       {/* TABLE */}
+// //       <div className="table-wrapper">
+// //         <table className="users-table">
+// //           <thead>
+// //             <tr>
+// //               <th>Email</th>
+// //               <th>Balance</th>
+// //               <th>Total Deposit</th>
+// //               <th>Date Joined</th>
+// //               <th>Plans</th>
+// //               <th>Machines</th>
+// //               <th>Status</th>
+// //               <th>Action</th>
+// //             </tr>
+// //           </thead>
 
-// // //           <tbody>
-// // //             {paginatedUsers.map((user) => (
-// // //               <tr
-// // //                 key={user._id}
-// // //                 onClick={() => setSelectedUser(user)}
-// // //                 style={{ cursor: "pointer" }}
-// // //               >
-// // //                 <td data-label="Email">{user.email}</td>
+// //           <tbody>
+// //             {paginatedUsers.map((user) => (
+// //               <tr
+// //                 key={user._id}
+// //                 onClick={() => setSelectedUser(user)}
+// //                 style={{ cursor: "pointer" }}
+// //               >
+// //                 <td data-label="Email">{user.email}</td>
 
-// // //                 <td data-label="Balance">
-// // //                   ${user.balance.toLocaleString()}
-// // //                 </td>
+// //                 <td data-label="Balance">
+// //                   ${user.balance.toLocaleString()}
+// //                 </td>
 
-// // //                 <td data-label="Total Deposit">
-// // //                   ${user.totalDeposit.toLocaleString()}
-// // //                 </td>
+// //                 <td data-label="Total Deposit">
+// //                   ${user.totalDeposit.toLocaleString()}
+// //                 </td>
 
-// // //                 <td data-label="Date Joined">
-// // //                   {formatDate(user.dateJoined)}
-// // //                 </td>
+// //                 <td data-label="Date Joined">
+// //                   {formatDate(user.dateJoined)}
+// //                 </td>
 
-// // //                 <td data-label="Plans">
-// // //                   {user.activePlans?.length || 0}
-// // //                 </td>
+// //                 <td data-label="Plans">
+// //                   {user.activePlans?.length || 0}
+// //                 </td>
 
-// // //                 <td data-label="Machines">
-// // //                   {user.machines?.length || 0}
-// // //                 </td>
+// //                 <td data-label="Machines">
+// //                   {user.machines?.length || 0}
+// //                 </td>
 
-// // //                 <td data-label="Status">
-// // //                   <span
-// // //                     className={
-// // //                       user.blocked ? "status blocked" : "status active"
-// // //                     }
-// // //                   >
-// // //                     {user.blocked ? "Banned" : "Active"}
-// // //                   </span>
-// // //                 </td>
+// //                 <td data-label="Status">
+// //                   <span
+// //                     className={
+// //                       user.blocked ? "status blocked" : "status active"
+// //                     }
+// //                   >
+// //                     {user.blocked ? "Banned" : "Active"}
+// //                   </span>
+// //                 </td>
 
-// // //                 <td data-label="Action">
-// // //                   <div className="actions">
-// // //                     <button
-// // //                       className="btn block"
-// // //                       onClick={(e) => {
-// // //                         e.stopPropagation();
-// // //                         toggleBan(user._id);
-// // //                       }}
-// // //                     >
-// // //                       {user.blocked ? "Unban" : "Ban"}
-// // //                     </button>
+// //                 <td data-label="Action">
+// //                   <div className="actions">
+// //                     <button
+// //                       className="btn block"
+// //                       onClick={(e) => {
+// //                         e.stopPropagation();
+// //                         toggleBan(user._id);
+// //                       }}
+// //                     >
+// //                       {user.blocked ? "Unban" : "Ban"}
+// //                     </button>
 
-// // //                     <button
-// // //                       className="btn edit"
-// // //                       onClick={(e) => {
-// // //                         e.stopPropagation();
-// // //                         editUser(user._id);
-// // //                       }}
-// // //                     >
-// // //                       Edit
-// // //                     </button>
+// //                     <button
+// //                       className="btn edit"
+// //                       onClick={(e) => {
+// //                         e.stopPropagation();
+// //                         editUser(user._id);
+// //                       }}
+// //                     >
+// //                       Edit
+// //                     </button>
 
-// // //                     <button
-// // //                       className="btn delete"
-// // //                       onClick={(e) => {
-// // //                         e.stopPropagation();
-// // //                         deleteUser(user._id);
-// // //                       }}
-// // //                     >
-// // //                       Delete
-// // //                     </button>
-// // //                   </div>
-// // //                 </td>
-// // //               </tr>
-// // //             ))}
-// // //           </tbody>
-// // //         </table>
-// // //       </div>
+// //                     <button
+// //                       className="btn delete"
+// //                       onClick={(e) => {
+// //                         e.stopPropagation();
+// //                         deleteUser(user._id);
+// //                       }}
+// //                     >
+// //                       Delete
+// //                     </button>
+// //                   </div>
+// //                 </td>
+// //               </tr>
+// //             ))}
+// //           </tbody>
+// //         </table>
+// //       </div>
 
-// // //       {/* PAGINATION */}
-// // //       <div className="pagination">
-// // //         <button
-// // //           onClick={() =>
-// // //             setCurrentPage((p) => Math.max(1, p - 1))
-// // //           }
-// // //           disabled={currentPage === 1}
-// // //         >
-// // //           Prev
-// // //         </button>
+// //       {/* PAGINATION */}
+// //       <div className="pagination">
+// //         <button
+// //           onClick={() =>
+// //             setCurrentPage((p) => Math.max(1, p - 1))
+// //           }
+// //           disabled={currentPage === 1}
+// //         >
+// //           Prev
+// //         </button>
 
-// // //         <span>{currentPage}</span>
+// //         <span>{currentPage}</span>
 
-// // //         <button
-// // //           onClick={() =>
-// // //             setCurrentPage((p) =>
-// // //               Math.min(totalPages, p + 1)
-// // //             )
-// // //           }
-// // //           disabled={currentPage === totalPages}
-// // //         >
-// // //           Next
-// // //         </button>
-// // //       </div>
+// //         <button
+// //           onClick={() =>
+// //             setCurrentPage((p) =>
+// //               Math.min(totalPages, p + 1)
+// //             )
+// //           }
+// //           disabled={currentPage === totalPages}
+// //         >
+// //           Next
+// //         </button>
+// //       </div>
 
-// // //       {/* ================= MODAL ================= */}
-// // //       {selectedUser && (
-// // //         <div
-// // //           className="modal-overlay"
-// // //           onClick={() => setSelectedUser(null)}
-// // //         >
-// // //           <div
-// // //             className="modal"
-// // //             onClick={(e) => e.stopPropagation()}
-// // //           >
-// // //             <h2>User Details</h2>
+// //       {/* ================= MODAL ================= */}
+// //       {selectedUser && (
+// //         <div
+// //           className="modal-overlay"
+// //           onClick={() => setSelectedUser(null)}
+// //         >
+// //           <div
+// //             className="modal"
+// //             onClick={(e) => e.stopPropagation()}
+// //           >
+// //             <h2>User Details</h2>
 
-// // //             <p><b>Email:</b> {selectedUser.email}</p>
-// // //             <p><b>Balance:</b> ${selectedUser.balance}</p>
-// // //             <p><b>Total Deposit:</b> ${selectedUser.totalDeposit}</p>
-// // //             <p><b>Date Joined:</b> {formatDate(selectedUser.dateJoined)}</p>
+// //             <p><b>Email:</b> {selectedUser.email}</p>
+// //             <p><b>Balance:</b> ${selectedUser.balance}</p>
+// //             <p><b>Total Deposit:</b> ${selectedUser.totalDeposit}</p>
+// //             <p><b>Date Joined:</b> {formatDate(selectedUser.dateJoined)}</p>
 
-// // //             <h3>Active Plans</h3>
-// // //             <ul>
-// // //               {selectedUser.activePlans?.map((plan, i) => (
-// // //                 <li key={i}>{plan}</li>
-// // //               ))}
-// // //             </ul>
+// //             <h3>Active Plans</h3>
+// //             <ul>
+// //               {selectedUser.activePlans?.map((plan, i) => (
+// //                 <li key={i}>{plan}</li>
+// //               ))}
+// //             </ul>
 
-// // //             <h3>Machines</h3>
-// // //             <ul>
-// // //               {selectedUser.machines?.map((m, i) => (
-// // //                 <li key={i}>{m.name}</li>
-// // //               ))}
-// // //             </ul>
+// //             <h3>Machines</h3>
+// //             <ul>
+// //               {selectedUser.machines?.map((m, i) => (
+// //                 <li key={i}>{m.name}</li>
+// //               ))}
+// //             </ul>
 
-// // //             <button
-// // //               className="btn close"
-// // //               onClick={() => setSelectedUser(null)}
-// // //             >
-// // //               Close
-// // //             </button>
-// // //           </div>
-// // //         </div>
-// // //       )}
-// // //     </div>
-// // //   );
-// // // };
+// //             <button
+// //               className="btn close"
+// //               onClick={() => setSelectedUser(null)}
+// //             >
+// //               Close
+// //             </button>
+// //           </div>
+// //         </div>
+// //       )}
+// //     </div>
+// //   );
+// // };
 
-// // // export default AdminUsers;
+// // export default AdminUsers;
 
 // import React, {
 //   useEffect,
@@ -964,6 +964,8 @@
 
 // export default AdminUsers;
 
+// AdminUsers.jsx
+
 import React, {
   useEffect,
   useMemo,
@@ -971,7 +973,9 @@ import React, {
   useCallback,
   useMemo as reactUseMemo,
 } from "react";
+
 import axios from "axios";
+
 import "../styles/users.css";
 
 // ================= API URL =================
@@ -979,9 +983,8 @@ const API_URL =
   process.env.REACT_APP_API_URL;
 
 const AdminUsers = () => {
-  const [users, setUsers] = useState(
-    []
-  );
+  const [users, setUsers] =
+    useState([]);
 
   const [loading, setLoading] =
     useState(true);
@@ -1001,11 +1004,8 @@ const AdminUsers = () => {
 
   const [editForm, setEditForm] =
     useState({
-      name: "",
       email: "",
       balance: "",
-      walletAddress: "",
-      network: "",
     });
 
   const rowsPerPage = 5;
@@ -1025,44 +1025,51 @@ const AdminUsers = () => {
   );
 
   // ================= FETCH USERS =================
-  const fetchUsers = useCallback(async () => {
-    try {
-      setLoading(true);
+  const fetchUsers =
+    useCallback(async () => {
+      try {
+        setLoading(true);
 
-      const { data } = await axios.get(
-        `${API_URL}/api/admin/users`,
-        authConfig
-      );
+        const { data } =
+          await axios.get(
+            `${API_URL}/api/admin/users`,
+            authConfig
+          );
 
-      setUsers(data.users || []);
-    } catch (error) {
-      console.error(error);
+        setUsers(data.users || []);
+      } catch (error) {
+        console.error(error);
 
-      alert(
-        error.response?.data?.message ||
-          "Failed to fetch users"
-      );
-    } finally {
-      setLoading(false);
-    }
-  }, [authConfig]);
+        alert(
+          error.response?.data
+            ?.message ||
+            "Failed to fetch users"
+        );
+      } finally {
+        setLoading(false);
+      }
+    }, [authConfig]);
 
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
 
   // ================= SEARCH =================
-  const filteredUsers = useMemo(() => {
-    return users.filter((u) =>
-      u.email
-        ?.toLowerCase()
-        .includes(search.toLowerCase())
-    );
-  }, [users, search]);
+  const filteredUsers =
+    useMemo(() => {
+      return users.filter((u) =>
+        u.email
+          ?.toLowerCase()
+          .includes(
+            search.toLowerCase()
+          )
+      );
+    }, [users, search]);
 
   // ================= PAGINATION =================
   const totalPages = Math.ceil(
-    filteredUsers.length / rowsPerPage
+    filteredUsers.length /
+      rowsPerPage
   );
 
   const paginatedUsers =
@@ -1072,17 +1079,89 @@ const AdminUsers = () => {
       currentPage * rowsPerPage
     );
 
+  // ================= TOGGLE BAN =================
+  const toggleBan = async (id) => {
+    try {
+      const { data } =
+        await axios.put(
+          `${API_URL}/api/admin/users/${id}/toggle-ban`,
+          {},
+          authConfig
+        );
+
+      setUsers((prev) =>
+        prev.map((u) =>
+          u._id === id
+            ? data.user
+            : u
+        )
+      );
+
+      if (
+        selectedUser?._id === id
+      ) {
+        setSelectedUser(
+          data.user
+        );
+      }
+    } catch (error) {
+      console.error(error);
+
+      alert(
+        error.response?.data
+          ?.message ||
+          "Failed to update user"
+      );
+    }
+  };
+
+  // ================= DELETE USER =================
+  const deleteUser = async (
+    id
+  ) => {
+    if (
+      !window.confirm(
+        "Delete this user?"
+      )
+    )
+      return;
+
+    try {
+      await axios.delete(
+        `${API_URL}/api/admin/users/${id}`,
+        authConfig
+      );
+
+      setUsers((prev) =>
+        prev.filter(
+          (u) =>
+            u._id !== id
+        )
+      );
+
+      if (
+        selectedUser?._id === id
+      ) {
+        setSelectedUser(null);
+      }
+    } catch (error) {
+      console.error(error);
+
+      alert(
+        error.response?.data
+          ?.message ||
+          "Failed to delete user"
+      );
+    }
+  };
+
   // ================= OPEN EDIT MODAL =================
   const editUser = (user) => {
     setEditForm({
-      name: user.name || "",
-      email: user.email || "",
+      email:
+        user.email || "",
       balance:
         user.balance || 0,
-      walletAddress:
-        user.walletAddress || "",
-      network:
-        user.network || "",
     });
 
     setSelectedUser(user);
@@ -1093,11 +1172,19 @@ const AdminUsers = () => {
   // ================= UPDATE USER =================
   const updateUser = async () => {
     try {
-      const { data } = await axios.put(
-        `${API_URL}/api/admin/users/${selectedUser._id}`,
-        editForm,
-        authConfig
-      );
+      const { data } =
+        await axios.put(
+          `${API_URL}/api/admin/users/${selectedUser._id}`,
+          {
+            email:
+              editForm.email,
+
+            balance: Number(
+              editForm.balance
+            ),
+          },
+          authConfig
+        );
 
       setUsers((prev) =>
         prev.map((u) =>
@@ -1108,7 +1195,9 @@ const AdminUsers = () => {
         )
       );
 
-      setSelectedUser(data.user);
+      setSelectedUser(
+        data.user
+      );
 
       setEditModal(false);
 
@@ -1119,76 +1208,9 @@ const AdminUsers = () => {
       console.error(error);
 
       alert(
-        error.response?.data?.message ||
+        error.response?.data
+          ?.message ||
           "Failed to update user"
-      );
-    }
-  };
-
-  // ================= TOGGLE BAN =================
-  const toggleBan = async (id) => {
-    try {
-      const { data } = await axios.put(
-        `${API_URL}/api/admin/users/${id}/toggle-ban`,
-        {},
-        authConfig
-      );
-
-      setUsers((prev) =>
-        prev.map((u) =>
-          u._id === id
-            ? data.user
-            : u
-        )
-      );
-
-      if (selectedUser?._id === id) {
-        setSelectedUser(data.user);
-      }
-
-      alert(data.message);
-    } catch (error) {
-      console.error(error);
-
-      alert(
-        error.response?.data?.message ||
-          "Failed to update user"
-      );
-    }
-  };
-
-  // ================= DELETE USER =================
-  const deleteUser = async (id) => {
-    if (
-      !window.confirm(
-        "Delete this user?"
-      )
-    )
-      return;
-
-    try {
-      const { data } = await axios.delete(
-        `${API_URL}/api/admin/users/${id}`,
-        authConfig
-      );
-
-      setUsers((prev) =>
-        prev.filter(
-          (u) => u._id !== id
-        )
-      );
-
-      if (selectedUser?._id === id) {
-        setSelectedUser(null);
-      }
-
-      alert(data.message);
-    } catch (error) {
-      console.error(error);
-
-      alert(
-        error.response?.data?.message ||
-          "Failed to delete user"
       );
     }
   };
@@ -1236,8 +1258,8 @@ const AdminUsers = () => {
               <th>Balance</th>
               <th>Total Deposit</th>
               <th>Date Joined</th>
-              <th>Plans</th>
-              <th>Machines</th>
+              <th>Active Plans</th>
+              <th>Active Machines</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -1255,26 +1277,23 @@ const AdminUsers = () => {
               paginatedUsers.map(
                 (user) => (
                   <tr
-                    key={user._id}
+                    key={
+                      user._id
+                    }
+                    onClick={() =>
+                      setSelectedUser(
+                        user
+                      )
+                    }
+                    style={{
+                      cursor:
+                        "pointer",
+                    }}
                   >
                     <td data-label="Email">
-                      <span
-                        style={{
-                          cursor:
-                            "pointer",
-                          color:
-                            "#2563eb",
-                          fontWeight:
-                            "600",
-                        }}
-                        onClick={() =>
-                          setSelectedUser(
-                            user
-                          )
-                        }
-                      >
-                        {user.email}
-                      </span>
+                      {
+                        user.email
+                      }
                     </td>
 
                     <td data-label="Balance">
@@ -1293,15 +1312,15 @@ const AdminUsers = () => {
                       )}
                     </td>
 
-                    <td data-label="Plans">
+                    <td data-label="Active Plans">
                       {
                         user.activePlansCount
                       }
                     </td>
 
-                    <td data-label="Machines">
+                    <td data-label="Active Machines">
                       {
-                        user.machinesCount
+                        user.activeMachinesCount
                       }
                     </td>
 
@@ -1323,11 +1342,15 @@ const AdminUsers = () => {
                       <div className="actions">
                         <button
                           className="btn block"
-                          onClick={() =>
+                          onClick={(
+                            e
+                          ) => {
+                            e.stopPropagation();
+
                             toggleBan(
                               user._id
-                            )
-                          }
+                            );
+                          }}
                         >
                           {user.blocked
                             ? "Unban"
@@ -1336,22 +1359,30 @@ const AdminUsers = () => {
 
                         <button
                           className="btn edit"
-                          onClick={() =>
+                          onClick={(
+                            e
+                          ) => {
+                            e.stopPropagation();
+
                             editUser(
                               user
-                            )
-                          }
+                            );
+                          }}
                         >
                           Edit
                         </button>
 
                         <button
                           className="btn delete"
-                          onClick={() =>
+                          onClick={(
+                            e
+                          ) => {
+                            e.stopPropagation();
+
                             deleteUser(
                               user._id
-                            )
-                          }
+                            );
+                          }}
                         >
                           Delete
                         </button>
@@ -1376,7 +1407,10 @@ const AdminUsers = () => {
         <button
           onClick={() =>
             setCurrentPage((p) =>
-              Math.max(1, p - 1)
+              Math.max(
+                1,
+                p - 1
+              )
             )
           }
           disabled={
@@ -1386,7 +1420,7 @@ const AdminUsers = () => {
           Prev
         </button>
 
-        <span className="current-page">
+        <span>
           {currentPage}
         </span>
 
@@ -1414,11 +1448,16 @@ const AdminUsers = () => {
         !editModal && (
           <div
             className="modal-overlay"
-            onClick={() =>
-              setSelectedUser(
-                null
-              )
-            }
+            onClick={(e) => {
+              if (
+                e.target ===
+                e.currentTarget
+              ) {
+                setSelectedUser(
+                  null
+                );
+              }
+            }}
           >
             <div
               className="modal"
@@ -1431,12 +1470,6 @@ const AdminUsers = () => {
               </h2>
 
               <p>
-                <b>Name:</b>{" "}
-                {selectedUser.name ||
-                  "N/A"}
-              </p>
-
-              <p>
                 <b>Email:</b>{" "}
                 {
                   selectedUser.email
@@ -1444,7 +1477,8 @@ const AdminUsers = () => {
               </p>
 
               <p>
-                <b>Balance:</b> $
+                <b>Balance:</b>{" "}
+                $
                 {
                   selectedUser.balance
                 }
@@ -1515,7 +1549,7 @@ const AdminUsers = () => {
                   Active Machines:
                 </b>{" "}
                 {
-                  selectedUser.machinesCount
+                  selectedUser.activeMachinesCount
                 }
               </p>
 
@@ -1534,7 +1568,8 @@ const AdminUsers = () => {
 
               <ul>
                 {selectedUser.activePlans
-                  ?.length > 0 ? (
+                  ?.length >
+                0 ? (
                   selectedUser.activePlans.map(
                     (
                       plan,
@@ -1543,7 +1578,8 @@ const AdminUsers = () => {
                       <li
                         key={i}
                       >
-                        {plan}
+                        {plan.name ||
+                          "Unnamed Plan"}
                       </li>
                     )
                   )
@@ -1555,11 +1591,14 @@ const AdminUsers = () => {
                 )}
               </ul>
 
-              <h3>Machines</h3>
+              <h3>
+                Machines
+              </h3>
 
               <ul>
                 {selectedUser.machines
-                  ?.length > 0 ? (
+                  ?.length >
+                0 ? (
                   selectedUser.machines.map(
                     (
                       machine,
@@ -1568,14 +1607,8 @@ const AdminUsers = () => {
                       <li
                         key={i}
                       >
-                        {
-                          machine.name
-                        }{" "}
-                        (
-                        {
-                          machine.status
-                        }
-                        )
+                        {machine.name ||
+                          "Unnamed Machine"}
                       </li>
                     )
                   )
@@ -1604,12 +1637,17 @@ const AdminUsers = () => {
       {editModal && (
         <div
           className="modal-overlay"
-          onClick={() => {
-            setEditModal(false);
+          onClick={(e) => {
+            if (
+              e.target ===
+              e.currentTarget
+            ) {
+              setEditModal(false);
 
-            setSelectedUser(
-              null
-            );
+              setSelectedUser(
+                null
+              );
+            }
           }}
         >
           <div
@@ -1618,29 +1656,14 @@ const AdminUsers = () => {
               e.stopPropagation()
             }
           >
-            <h2>Edit User</h2>
+            <h2>
+              Edit User
+            </h2>
 
             <div className="form-group">
-              <label>Name</label>
-
-              <input
-                type="text"
-                value={
-                  editForm.name
-                }
-                onChange={(e) =>
-                  setEditForm({
-                    ...editForm,
-                    name:
-                      e.target
-                        .value,
-                  })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Email</label>
+              <label>
+                Email
+              </label>
 
               <input
                 type="email"
@@ -1672,48 +1695,6 @@ const AdminUsers = () => {
                   setEditForm({
                     ...editForm,
                     balance:
-                      e.target
-                        .value,
-                  })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>
-                Wallet Address
-              </label>
-
-              <input
-                type="text"
-                value={
-                  editForm.walletAddress
-                }
-                onChange={(e) =>
-                  setEditForm({
-                    ...editForm,
-                    walletAddress:
-                      e.target
-                        .value,
-                  })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>
-                Network
-              </label>
-
-              <input
-                type="text"
-                value={
-                  editForm.network
-                }
-                onChange={(e) =>
-                  setEditForm({
-                    ...editForm,
-                    network:
                       e.target
                         .value,
                   })
