@@ -337,9 +337,9 @@
 .admin-reply {
   align-self: flex-end;
 
-  background: #2563eb;
+  background: #d4a64f;
 
-  color: #ffffff;
+  color: #eee;
 
   border-bottom-right-radius: 4px;
 }
@@ -411,9 +411,9 @@
 
   border-radius: 14px;
 
-  background: #2563eb;
+  background: #d4a64f;
 
-  color: #ffffff;
+  color: #eee;
 
   display: flex;
   align-items: center;
