@@ -54,7 +54,7 @@ const AdminSupport = () => {
         <div className="admin-sidebar">
 
           <div className="sidebar-top">
-            <h3>Support Chats</h3>
+            <h3>Support Chat</h3>
           </div>
 
           <div className="chat-user active">
