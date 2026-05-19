@@ -8,7 +8,7 @@ import Users from "./pages/AdminUsers";
 import Transactions from "./pages/AdminTransactions";
 import Plans from "./pages/AdminPlans";
 import AdminLogin from "./pages/AdminLogin";
-import AdminSupport from "./pages/AdminSupport";
+import Support from "./pages/AdminSupport";
 
 function App() {
   return (
