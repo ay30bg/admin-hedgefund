@@ -8,7 +8,7 @@ import Users from "./pages/AdminUsers";
 import Transactions from "./pages/AdminTransactions";
 import Plans from "./pages/AdminPlans";
 import AdminLogin from "./pages/AdminLogin";
-import Support from "./pages/AdminSupport";
+import AdminSupport from "./pages/AdminSupport";
 
 function App() {
   return (
@@ -36,7 +36,7 @@ function App() {
           <Route path="users" element={<Users />} />
           <Route path="transactions" element={<Transactions />} />
           <Route path="plans" element={<Plans />} />
-          <Route path="support" element={<Support />} />
+          <Route path="support" element={<AdminSupport />} />
         </Route>
 
         {/* 404 */}
