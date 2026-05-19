@@ -101,7 +101,7 @@
 .chat-user.active {
   background: rgba(37, 99, 235, 0.1);
 
-  border-left: 4px solid #2563eb;
+  border-left: 4px solid #d4a64f;
 }
 
 /* AVATAR */
@@ -117,7 +117,7 @@
   align-items: center;
   justify-content: center;
 
-  color: #2563eb;
+  color: #d4a64f;
 
   font-size: 20px;
 
@@ -203,7 +203,7 @@
 
   background: rgba(37, 99, 235, 0.12);
 
-  color: #2563eb;
+  color: #d4a64f;
 
   display: flex;
   align-items: center;
@@ -235,7 +235,7 @@
 }
 
 .verified-icon {
-  color: #2563eb;
+  color: #d4a64f;
 
   font-size: 18px;
 }
