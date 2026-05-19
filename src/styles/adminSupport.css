@@ -95,7 +95,7 @@
 }
 
 .chat-user:hover {
-  background: #f9fafb;
+  background: #e3bf79;
 }
 
 .chat-user.active {
@@ -201,7 +201,7 @@
 
   border-radius: 50%;
 
-  background: rgba(37, 99, 235, 0.12);
+  background: #e3bf79;
 
   color: #d4a64f;
 
