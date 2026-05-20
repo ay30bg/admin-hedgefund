@@ -529,7 +529,8 @@
 import React, {
   useEffect,
   useRef,
-  useState
+  useState,
+  useCallback
 } from "react";
 
 import axios from "axios";
@@ -606,7 +607,7 @@ const AdminSupport = () => {
   // =========================
 
   const fetchChats =
-    async () => {
+    useCallback(async () => {
 
       try {
 
@@ -643,15 +644,12 @@ const AdminSupport = () => {
         setLoading(false);
 
       }
-    };
+
+    }, []);
 
   useEffect(() => {
-
     fetchChats();
-
-    // eslint-disable-next-line
-
-  }, []);
+  }, [fetchChats]);
 
   // =========================
   // FETCH SINGLE CHAT
