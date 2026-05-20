@@ -391,7 +391,7 @@
 }
 
 .admin-input-box input:focus {
-  border-color: #2563eb;
+  border-color: #d4a64f;
 
   background: #ffffff;
 
@@ -431,14 +431,9 @@
 }
 
 .admin-input-box button:hover {
-  background: #e3bf79;
-
-  transform: translateY(-1px);
+  transform: scale(1.05);
 }
 
-.admin-input-box button:active {
-  transform: scale(0.97);
-}
 
 /* =========================
    SCROLLBAR
