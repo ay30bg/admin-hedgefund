@@ -605,10 +605,6 @@ const AdminSupport = () => {
   // FETCH CHATS
   // =========================
 
-  useEffect(() => {
-    fetchChats();
-  }, []);
-
   const fetchChats =
     async () => {
 
@@ -648,6 +644,14 @@ const AdminSupport = () => {
 
       }
     };
+
+  useEffect(() => {
+
+    fetchChats();
+
+    // eslint-disable-next-line
+
+  }, []);
 
   // =========================
   // FETCH SINGLE CHAT
@@ -773,26 +777,6 @@ const AdminSupport = () => {
       {
         hour: "2-digit",
         minute: "2-digit"
-      }
-    );
-  };
-
-  // =========================
-  // FORMAT DATE
-  // =========================
-
-  const formatDate = (
-    date
-  ) => {
-
-    return new Date(
-      date
-    ).toLocaleDateString(
-      "en-NG",
-      {
-        day: "numeric",
-        month: "short",
-        year: "numeric"
       }
     );
   };
