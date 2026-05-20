@@ -512,8 +512,8 @@
     width: 100%;
     height: 100%;
 
-    border: none;
     border-radius: 0;
+    border: none;
 
     box-shadow: none;
 
@@ -535,7 +535,7 @@
 
     background: #fff;
 
-    z-index: 30;
+    z-index: 20;
 
     overflow-y: auto;
 
@@ -565,7 +565,7 @@
   }
 
   /* =========================
-     USER ITEM
+     CHAT USER
   ========================= */
   .chat-user {
     display: flex;
@@ -621,6 +621,8 @@
     display: none !important;
 
     flex-direction: column;
+
+    padding-top: 60px; /* MOVES TOPBAR DOWN */
   }
 
   .admin-chat-section.show-mobile {
@@ -637,17 +639,19 @@
 
     padding: 0 16px;
 
-    background: #fff;
+    background: #000;
 
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #222;
 
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: space-between;
 
     flex-shrink: 0;
 
-    z-index: 50;
+    width: 100%;
+
+    z-index: 9999;
   }
 
   /* LEFT */
@@ -690,16 +694,22 @@
 
     font-size: 15px;
     font-weight: 600;
+
+    color: #fff;
   }
 
   .admin-user-info span {
     margin-top: 2px;
 
     font-size: 12px;
+
+    color: #ccc;
   }
 
   .verified-icon {
     font-size: 15px;
+
+    color: #d4a64f;
   }
 
   /* =========================
@@ -713,15 +723,19 @@
 
     border-radius: 10px;
 
+    background: rgba(255,255,255,0.08);
+
+    color: #fff;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
     font-size: 17px;
 
-    flex-shrink: 0;
-
     cursor: pointer;
+
+    flex-shrink: 0;
   }
 
   /* =========================
@@ -737,9 +751,9 @@
 
     border-radius: 10px;
 
-    background: #f3f4f6;
+    background: rgba(255,255,255,0.08);
 
-    color: #111827;
+    color: #fff;
 
     align-items: center;
     justify-content: center;
@@ -781,12 +795,10 @@
     word-break: break-word;
   }
 
-  /* USER */
   .user-message {
     align-self: flex-start;
   }
 
-  /* ADMIN */
   .admin-reply {
     align-self: flex-end;
   }
