@@ -641,7 +641,7 @@
 
     background: #fff;
 
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid #e5e7eb;
 
     display: flex !important;
     align-items: center;
@@ -695,7 +695,7 @@
     font-size: 15px;
     font-weight: 600;
 
-    color: #fff;
+    color: #111827;
   }
 
   .admin-user-info span {
