@@ -318,6 +318,40 @@
   position: relative;
 
   animation: fadeIn 0.2s ease;
+
+  display: flex;
+   
+  flex-direction: column; 
+}
+
+/* =========================
+   MESSAGE TIME
+========================= */
+
+.message-time {
+  margin-top: 6px;
+
+  font-size: 10px;
+
+  line-height: 1;
+
+  width: 100%;
+
+  opacity: 0.75;
+}
+
+/* USER MESSAGE TIME */
+.user-message .message-time {
+  text-align: left;
+
+  color: rgba(17, 24, 39, 0.55);
+}
+
+/* ADMIN MESSAGE TIME */
+.admin-reply .message-time {
+  text-align: right;
+
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* USER */
