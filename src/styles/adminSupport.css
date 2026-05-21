@@ -75,6 +75,29 @@
 }
 
 /* =========================
+   NO CHATS
+========================= */
+
+.no-chats {
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 20px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  height: 100%;
+}
+
+/* =========================
    USER ITEM
 ========================= */
 .chat-user {
