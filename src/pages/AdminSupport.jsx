@@ -279,13 +279,76 @@ const AdminSupport = () => {
   // =========================
 
   if (loading) {
-    return (
-      <div className="admin-support-page">
-        Loading chats...
-      </div>
-    );
-  }
+  return (
+    <div className="admin-support-page">
 
+      <div className="admin-support-wrapper">
+
+        {/* SIDEBAR SKELETON */}
+        <div className="admin-sidebar">
+
+          <div className="sidebar-top">
+            <div className="skeleton skeleton-title"></div>
+          </div>
+
+          {[1, 2, 3, 4, 5].map((item) => (
+            <div
+              className="chat-user skeleton-user"
+              key={item}
+            >
+              <div className="skeleton skeleton-avatar"></div>
+
+              <div className="chat-user-details">
+                <div className="skeleton skeleton-name"></div>
+                <div className="skeleton skeleton-message"></div>
+              </div>
+            </div>
+          ))}
+
+        </div>
+
+        {/* CHAT SECTION SKELETON */}
+        <div className="admin-chat-section">
+
+          <div className="admin-chat-top">
+
+            <div className="admin-chat-user">
+
+              <div className="skeleton skeleton-avatar large"></div>
+
+              <div className="admin-user-info">
+                <div className="skeleton skeleton-name"></div>
+                <div className="skeleton skeleton-status"></div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="admin-chat-messages">
+
+            {[1, 2, 3, 4].map((item) => (
+              <div
+                key={item}
+                className={`admin-message ${
+                  item % 2 === 0
+                    ? "admin-reply"
+                    : "user-message"
+                }`}
+              >
+                <div className="skeleton skeleton-bubble"></div>
+              </div>
+            ))}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
   return (
     <div className="admin-support-page">
 
