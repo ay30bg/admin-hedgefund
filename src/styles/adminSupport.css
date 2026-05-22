@@ -392,6 +392,69 @@
 }
 
 /* =========================
+   EMPTY CHAT
+========================= */
+
+.empty-chat {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 40px 20px;
+
+  color: #6b7280;
+}
+
+/* ICON CIRCLE */
+.empty-chat::before {
+  content: "💬";
+
+  width: 78px;
+  height: 78px;
+
+  border-radius: 50%;
+
+  background: rgba(212, 166, 79, 0.12);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 34px;
+
+  margin-bottom: 18px;
+
+  box-shadow:
+    0 8px 20px rgba(212, 166, 79, 0.08),
+    inset 0 0 0 1px rgba(212, 166, 79, 0.08);
+}
+
+/* TEXT */
+.empty-chat {
+  font-size: 15px;
+  font-weight: 500;
+
+  line-height: 1.6;
+}
+
+/* OPTIONAL SMALL DESCRIPTION */
+.empty-chat span {
+  margin-top: 8px;
+
+  font-size: 13px;
+
+  color: #9ca3af;
+
+  max-width: 280px;
+}
+
+/* =========================
    MESSAGES
 ========================= */
 .admin-chat-messages {
