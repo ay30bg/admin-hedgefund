@@ -481,9 +481,14 @@ const AdminSupport = () => {
 
             {!selectedUser ? (
 
-              <div className="empty-chat">
-                Select a user chat
-              </div>
+             <div className="empty-chat">
+  Start a conversation
+
+  <span>
+    Select a user from the sidebar
+    to view messages and reply
+  </span>
+</div>
 
             ) : chatLoading ? (
 
